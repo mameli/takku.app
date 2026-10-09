@@ -1,0 +1,8 @@
+// Cloudflare Workers, static assets only: the site is the public/ folder, served as it is.
+{
+  "name": "takku-app",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public"
+  }
+}

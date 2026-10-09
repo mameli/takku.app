@@ -1,6 +1,6 @@
-"""Writes the hand-drawn diagram into index.html, replacing the <figure class="schematic">.
+"""Writes the hand-drawn diagram into public/index.html, replacing the <figure class="schematic">.
 
-    python3 tools/drawing.py index.html
+    python3 tools/drawing.py public/index.html
 """
 import random
 import re

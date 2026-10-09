@@ -13,7 +13,7 @@ import re
 from pathlib import Path
 
 random.seed(5)
-CSS = Path(__file__).resolve().parent.parent / "style.css"
+CSS = Path(__file__).resolve().parent.parent / "public" / "style.css"
 
 
 def uri(svg):
