@@ -235,8 +235,7 @@ a:hover {
   color: var(--red);
   background-image: var(--u-link-hover);
 }
-a:focus-visible,
-.command:focus-visible {
+a:focus-visible {
   outline: 2px dashed var(--red);
   outline-offset: 3px;
   border-radius: 2px;
@@ -263,23 +262,29 @@ h2 {
   color: var(--ink);
 }
 
+/* The icon and the name stay on one line: the name is 2.48em wide, the icon 0.87em. */
 h1 {
+  --gap: 28px;
+  --size: 7.5rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px 28px;
+  gap: 8px var(--gap);
   margin: 0 0 var(--unit);
-  font-size: 7.5rem;
+  font-size: var(--size);
+  font-size: min(var(--size), (100cqi - var(--gap)) / 3.38);
   line-height: 1;
   letter-spacing: -0.01em;
 }
 h1 img {
-  width: 104px;
-  height: 104px;
+  width: 0.87em;
+  height: 0.87em;
   transform: rotate(-4deg);
 }
 
 h2 {
+  width: fit-content;
+  max-width: 100%;
   margin: 0 0 var(--unit);
   font-size: 2.25rem;
   line-height: 48px;
@@ -287,9 +292,9 @@ h2 {
 h2::after {
   content: "";
   display: block;
-  width: min(100%, 9.5em);
+  width: calc(100% + 0.3em);
   height: 12px;
-  margin-top: -4px;
+  margin: -4px 0 0 -0.1em;
   background: var(--red);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8C22 3 40 11 62 6s42-5 62 1 44 4 74-4' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8C22 3 40 11 62 6s42-5 62 1 44 4 74-4' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
@@ -311,6 +316,9 @@ h2::after {
 }
 
 /* Hero */
+.hero-text {
+  container-type: inline-size;
+}
 .hero {
   grid-template-columns: var(--margin) minmax(0, 1fr) minmax(0, clamp(26rem, 34vw, 34rem));
   align-items: start;
@@ -439,7 +447,7 @@ h2::after {
 
 .hand {
   font-family: var(--hand);
-  font-size: 18px;
+  font-size: 20px;
   fill: var(--ink);
   /* A halo of paper, so the lines underneath do not cross the words. */
   paint-order: stroke;
@@ -447,7 +455,7 @@ h2::after {
   stroke-width: 5px;
   stroke-linejoin: round;
 }
-.hand.small { font-size: 14.5px; }
+.hand.small { font-size: 16px; }
 .graphite-text { fill: var(--graphite); }
 .red-text { fill: var(--red); }
 
@@ -677,15 +685,12 @@ footer .main {
   .hole-tr, .hole-br { right: 14px; }
 
   .main { padding-bottom: 56px; }
-  h1 { font-size: 4.5rem; gap: 4px 18px; }
-  h1 img { width: 72px; height: 72px; }
+  h1 { --size: 4.5rem; --gap: 18px; row-gap: 4px; }
   .note-title { flex-basis: 100%; margin-top: 8px; transform: rotate(-2deg); }
   h2 { font-size: 2rem; line-height: 44px; }
   .lead { font-size: 1.25rem; line-height: 32px; }
   .command { font-size: 0.875rem; padding: 12px 14px; }
-  .schematic { grid-column: 2; width: auto; margin: 0 calc(6px - var(--pad)) 48px 8px; }
-  .hand { font-size: 20px; }
-  .hand.small { font-size: 16px; }
+  .schematic { grid-column: 2; width: auto; margin: 0 -4px 48px 8px; }
 
   .notes .note {
     position: static;
