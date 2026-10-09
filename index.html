@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Takku: meeting notes, transcribed on your Mac</title>
+  <meta name="description" content="A macOS menu bar app that records your meetings, transcribes them on your Mac and writes the notes into your Obsidian vault. Free and open source.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f1f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1d3f73" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Takku">
+  <meta property="og:description" content="Records your meetings, transcribes them on your Mac and writes the notes into your Obsidian vault.">
+  <meta property="og:image" content="https://takku.app/icon.png">
+  <meta property="og:url" content="https://takku.app/">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/kalam-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/literata.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="sheet">
+  <span class="frame" aria-hidden="true"></span>
+  <span class="ruler ruler-top" aria-hidden="true"></span>
+  <span class="ruler ruler-left" aria-hidden="true"></span>
+  <span class="margin-rule" aria-hidden="true"></span>
+  <span class="hole hole-tl" aria-hidden="true"></span>
+  <span class="hole hole-tr" aria-hidden="true"></span>
+  <span class="hole hole-bl" aria-hidden="true"></span>
+  <span class="hole hole-br" aria-hidden="true"></span>
+
+  <header class="row hero">
+    <div class="main hero-text">
+      <h1>
+        <img src="icon.png" alt="" width="104" height="104">
+        Takku
+        <span class="note note-title">takku &larr; <i>taccuino</i>,<br>Italian for notebook</span>
+      </h1>
+      <p class="lead">Records your meetings, transcribes them on your Mac and writes the notes into your Obsidian vault.</p>
+      <p>You choose who writes the summary: a model on your Mac, or a provider you trust. Made for people whose company doesn’t let meeting audio and text leave the EU.</p>
+
+      <div class="install">
+        <code class="command sketch">brew install --cask mameli/takku/takku</code>
+        <p>Or <a href="https://github.com/mameli/takku/releases/latest">download the latest version</a> from GitHub. Free and open source. Needs a Mac with Apple Silicon and macOS 15 or later.</p>
+      </div>
+    </div>
+
+    <figure class="schematic">
+      <svg viewBox="0 0 520 660" role="img" aria-labelledby="drawing-title drawing-desc">
+        <title id="drawing-title">How Takku works</title>
+        <desc id="drawing-desc">Your microphone and the call go into a transcript, written on your Mac, with each speaker in a different colour. The transcript becomes a meeting note in your Obsidian vault, with the summary on top. The summary is written by a model on your Mac or by a provider you choose. The audio stays on your Mac.</desc>
+        <defs>
+          <!-- Coloured pencil: grain inside the stroke, edges not quite straight -->
+          <filter id="crayon" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="grain"/>
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.2 0 0 0 -0.95" result="mask"/>
+            <feComposite in="SourceGraphic" in2="mask" operator="in" result="grainy"/>
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="9" result="warp"/>
+            <feDisplacementMap in="grainy" in2="warp" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+
+        <!-- Your Mac -->
+        <rect x="20" y="42" width="400" height="598" rx="28" class="boundary" filter="url(#wobble)"/>
+        <text x="26" y="30" class="hand graphite-text">your Mac</text>
+
+        <!-- Microphone, in red: you -->
+        <g filter="url(#crayon)">
+          <rect x="94" y="80" width="34" height="58" rx="17" class="fill-red"/>
+        </g>
+        <g filter="url(#wobble)" class="outline">
+          <rect x="94" y="80" width="34" height="58" rx="17"/>
+          <path d="M101 96h20M101 106h20M101 116h20"/>
+          <path d="M84 118c0 26 12 36 27 36s27-10 27-36M111 154v18M92 174h38"/>
+        </g>
+
+        <!-- The call: a window with the two people, in blue and green -->
+        <g filter="url(#crayon)">
+          <path d="M240 80h130v14H240z" class="fill-graphite"/>
+          <circle cx="278" cy="118" r="11" class="fill-blue"/>
+          <path d="M258 158c2-16 10-24 20-24s18 8 20 24z" class="fill-blue"/>
+          <circle cx="334" cy="118" r="11" class="fill-green"/>
+          <path d="M314 158c2-16 10-24 20-24s18 8 20 24z" class="fill-green"/>
+        </g>
+        <g filter="url(#wobble)" class="outline">
+          <rect x="240" y="80" width="130" height="86" rx="8"/>
+          <path d="M240 94h130"/>
+        </g>
+
+        <!-- Into the transcript -->
+        <g filter="url(#wobble)" class="arrow">
+          <path pathLength="1" class="trace" d="M114 186c4 34 40 50 70 70"/>
+          <path pathLength="1" class="trace" d="M330 176c2 36-20 58-44 80"/>
+          <path class="trace head" d="M184 256l-13-1M184 256l-5-12"/>
+          <path class="trace head" d="M286 256l3-13M286 256l12-4"/>
+        </g>
+
+        <!-- Transcript, taped down -->
+        <g transform="rotate(-2 230 328)">
+          <rect x="125" y="254" width="210" height="146" class="sheet-paper" filter="url(#wobble)"/>
+          <g filter="url(#wobble)" class="scribbles"><path class="ink-red" d="M142.0 284.0c0.4 -3.2 4.0 -3.2 4.5 0c0.4 -3.2 3.6 -3.2 4.0 0c0.4 -2.6 3.7 -2.6 4.1 0c-1.1 -7.1 3.3 -7.1 3.6 0c-1.3 -7.5 3.8 -7.5 4.2 0c0.5 -3.4 4.1 -3.4 4.6 0c-1.0 -6.6 3.1 -6.6 3.4 0M173.3 284.0c-1.1 -6.4 3.2 -6.4 3.5 0c0.4 -3.2 3.4 -3.2 3.8 0c0.4 -3.5 3.7 -3.5 4.1 0c0.4 -4.0 3.5 -4.0 3.8 0c0.5 -3.5 4.1 -3.5 4.6 0M195.8 284.0c-1.1 -7.0 3.2 -7.0 3.6 0c0.4 -3.0 3.4 -3.0 3.8 0c0.5 -2.4 4.1 -2.4 4.5 0c0.3 -3.2 3.1 -3.2 3.5 0c0.5 -2.5 4.1 -2.5 4.6 0M220.5 284.0c-1.1 -6.2 3.2 -6.2 3.6 0c0.5 -2.6 4.1 -2.6 4.5 0c0.4 -2.5 3.2 -2.5 3.5 0c0.4 -3.3 3.9 -3.3 4.3 0c0.4 -3.6 3.4 -3.6 3.8 0c0.3 -2.6 3.0 -2.6 3.4 0c0.4 -2.8 3.4 -2.8 3.8 0c0.5 -2.9 4.1 -2.9 4.6 0c0.4 -3.0 4.0 -3.0 4.4 0M260.2 284.0c0.3 -2.7 3.0 -2.7 3.3 0c0.4 -2.9 3.2 -2.9 3.6 0c-1.1 -5.7 3.3 -5.7 3.6 0c0.4 -3.4 3.6 -3.4 4.0 0c0.4 -3.9 3.3 -3.9 3.7 0c0.4 -3.8 3.5 -3.8 3.9 0c0.3 -3.9 3.1 -3.9 3.5 0c0.4 -2.7 3.9 -2.7 4.3 0M296.0 284.0c0.3 -3.8 3.1 -3.8 3.5 0c0.4 -2.6 3.6 -2.6 4.0 0c0.3 -2.8 2.9 -2.8 3.3 0c0.4 -3.7 3.8 -3.7 4.2 0c0.4 -2.7 3.6 -2.7 4.0 0M142.0 300.0c0.4 -3.4 3.6 -3.4 4.0 0c0.4 -2.7 3.2 -2.7 3.6 0c0.3 -3.1 2.9 -3.1 3.2 0c0.3 -3.0 3.0 -3.0 3.3 0c0.4 -3.0 3.6 -3.0 4.0 0M167.6 300.0c0.4 -3.3 3.7 -3.3 4.1 0c-1.0 -5.5 3.1 -5.5 3.4 0c0.4 -3.9 4.0 -3.9 4.5 0c0.3 -3.2 2.9 -3.2 3.2 0c0.4 -4.0 3.8 -4.0 4.2 0c0.3 -3.6 3.0 -3.6 3.3 0c0.4 -3.5 4.0 -3.5 4.5 0c0.4 -3.0 3.9 -3.0 4.3 0c0.4 -3.8 3.7 -3.8 4.2 0c0.4 -3.8 3.4 -3.8 3.8 0M211.6 300.0c0.4 -3.4 3.4 -3.4 3.7 0c0.3 -4.0 3.0 -4.0 3.3 0c0.4 -3.0 4.0 -3.0 4.4 0c0.4 -3.1 3.8 -3.1 4.2 0c-1.3 -7.0 3.9 -7.0 4.4 0c0.3 -3.2 2.9 -3.2 3.2 0c0.4 -3.2 3.2 -3.2 3.5 0c0.4 -2.8 3.7 -2.8 4.1 0M244.3 300.0c0.4 -2.7 3.7 -2.7 4.1 0c0.4 -3.1 4.0 -3.1 4.5 0c0.4 -3.5 4.0 -3.5 4.4 0c0.3 -3.7 3.1 -3.7 3.5 0c0.4 -3.0 4.0 -3.0 4.5 0M270.7 300.0c0.3 -3.7 3.1 -3.7 3.4 0c0.4 -3.9 3.9 -3.9 4.4 0c0.4 -3.1 3.2 -3.1 3.6 0c0.4 -3.1 3.2 -3.1 3.6 0c0.4 -2.9 3.7 -2.9 4.1 0c0.4 -3.1 3.9 -3.1 4.4 0M295.7 300.0c-1.3 -6.9 4.0 -6.9 4.4 0c0.4 -3.7 3.6 -3.7 4.0 0c0.3 -3.1 2.9 -3.1 3.2 0c0.3 -2.8 2.9 -2.8 3.2 0"/><path class="ink-blue" d="M142.0 316.0c0.4 -3.4 3.4 -3.4 3.8 0c0.4 -3.5 3.9 -3.5 4.3 0c0.3 -2.7 3.1 -2.7 3.5 0c0.3 -3.5 2.9 -3.5 3.2 0c0.3 -3.0 3.1 -3.0 3.5 0c0.4 -3.4 3.8 -3.4 4.2 0c0.4 -3.7 3.8 -3.7 4.3 0c-1.3 -7.4 4.0 -7.4 4.5 0M177.4 316.0c0.4 -3.9 3.5 -3.9 3.8 0c0.4 -3.8 3.4 -3.8 3.7 0c0.4 -3.1 3.9 -3.1 4.3 0c0.4 -3.6 3.7 -3.6 4.1 0M200.1 316.0c0.4 -3.8 3.8 -3.8 4.2 0c0.5 -3.3 4.1 -3.3 4.6 0c0.4 -3.9 3.9 -3.9 4.3 0c0.4 -2.5 4.0 -2.5 4.4 0c0.4 -3.6 3.4 -3.6 3.8 0c-1.2 -7.1 3.5 -7.1 3.9 0c0.3 -2.7 3.0 -2.7 3.3 0c0.4 -2.6 3.3 -2.6 3.7 0M233.8 316.0c0.4 -3.5 3.8 -3.5 4.2 0c0.5 -3.9 4.1 -3.9 4.5 0c0.3 -3.2 3.0 -3.2 3.3 0c0.4 -3.4 3.2 -3.4 3.6 0c0.4 -3.3 3.5 -3.3 3.9 0c0.4 -3.8 3.3 -3.8 3.6 0c0.4 -3.8 4.0 -3.8 4.5 0M267.2 316.0c0.4 -3.3 3.6 -3.3 4.0 0c0.4 -2.4 3.5 -2.4 3.9 0c0.5 -3.0 4.1 -3.0 4.6 0c0.4 -3.2 3.9 -3.2 4.3 0c-1.3 -6.6 3.8 -6.6 4.2 0c0.4 -3.9 3.4 -3.9 3.8 0c0.4 -2.6 3.2 -2.6 3.6 0M298.8 316.0c0.4 -2.9 4.0 -2.9 4.5 0c0.3 -3.9 3.1 -3.9 3.5 0c0.3 -2.4 3.0 -2.4 3.4 0c0.3 -3.5 3.1 -3.5 3.5 0c0.4 -3.4 3.3 -3.4 3.7 0c0.3 -2.6 3.0 -2.6 3.3 0M142.0 332.0c0.4 -3.0 3.5 -3.0 3.9 0c0.4 -2.7 3.4 -2.7 3.8 0c0.3 -3.4 3.1 -3.4 3.5 0c0.4 -3.4 3.5 -3.4 3.9 0c0.4 -3.6 4.0 -3.6 4.4 0M166.5 332.0c0.4 -3.9 3.3 -3.9 3.6 0c0.4 -3.8 3.2 -3.8 3.5 0c0.3 -3.6 3.0 -3.6 3.4 0c-1.1 -7.2 3.2 -7.2 3.6 0c0.4 -2.6 3.4 -2.6 3.8 0c0.4 -2.4 3.4 -2.4 3.8 0c0.3 -3.9 3.1 -3.9 3.5 0c0.5 -3.2 4.1 -3.2 4.6 0c0.4 -3.5 3.8 -3.5 4.3 0c-1.0 -5.7 3.1 -5.7 3.5 0M206.6 332.0c0.4 -2.6 3.5 -2.6 3.9 0c0.3 -3.7 3.1 -3.7 3.5 0c0.5 -2.6 4.1 -2.6 4.6 0c0.3 -3.1 3.0 -3.1 3.3 0c0.4 -3.1 3.8 -3.1 4.3 0c0.4 -3.4 3.5 -3.4 3.9 0c0.3 -3.8 2.9 -3.8 3.2 0M238.1 332.0c0.4 -2.7 3.8 -2.7 4.2 0c0.3 -2.4 3.1 -2.4 3.4 0c0.4 -3.5 4.0 -3.5 4.5 0c0.4 -3.0 4.0 -3.0 4.4 0c0.4 -4.0 3.6 -4.0 4.0 0c0.4 -3.9 3.9 -3.9 4.3 0M269.0 332.0c0.4 -3.8 3.9 -3.8 4.3 0c0.4 -3.6 4.0 -3.6 4.4 0c0.4 -3.6 3.8 -3.6 4.3 0c0.3 -3.2 3.0 -3.2 3.3 0c0.3 -3.4 2.9 -3.4 3.2 0c0.4 -3.9 3.7 -3.9 4.1 0c0.4 -3.5 3.7 -3.5 4.1 0c0.4 -3.0 3.6 -3.0 4.0 0c0.5 -3.5 4.1 -3.5 4.6 0"/><path class="ink-green" d="M142.0 348.0c0.4 -2.8 3.7 -2.8 4.1 0c-1.1 -5.9 3.4 -5.9 3.8 0c-1.1 -6.0 3.4 -6.0 3.7 0c0.4 -3.2 4.0 -3.2 4.5 0M162.5 348.0c0.5 -3.7 4.1 -3.7 4.6 0c0.3 -3.6 3.0 -3.6 3.3 0c0.3 -2.7 2.9 -2.7 3.3 0c0.4 -3.2 3.5 -3.2 3.9 0c-1.2 -7.4 3.7 -7.4 4.1 0c0.4 -3.4 3.4 -3.4 3.8 0c0.4 -3.4 3.3 -3.4 3.7 0c0.4 -3.5 3.6 -3.5 4.0 0M194.8 348.0c-1.1 -5.8 3.2 -5.8 3.5 0c0.4 -3.8 3.8 -3.8 4.3 0c-1.3 -7.5 3.8 -7.5 4.2 0c-1.4 -7.3 4.1 -7.3 4.5 0M213.1 348.0c0.5 -3.2 4.1 -3.2 4.6 0c0.5 -3.1 4.1 -3.1 4.5 0c0.5 -3.4 4.1 -3.4 4.6 0c0.3 -3.1 3.0 -3.1 3.4 0c-1.0 -6.6 3.1 -6.6 3.5 0c0.3 -3.5 3.0 -3.5 3.4 0c0.4 -3.3 3.5 -3.3 3.8 0M243.5 348.0c0.4 -3.9 3.5 -3.9 3.9 0c0.4 -2.6 3.8 -2.6 4.2 0c0.4 -3.4 4.0 -3.4 4.4 0c0.4 -3.5 3.3 -3.5 3.7 0c0.4 -3.4 3.6 -3.4 4.0 0c0.4 -2.8 3.8 -2.8 4.3 0c0.5 -3.8 4.1 -3.8 4.6 0c-1.0 -6.0 2.9 -6.0 3.3 0M281.8 348.0c0.3 -2.5 3.0 -2.5 3.3 0c0.3 -3.3 3.0 -3.3 3.3 0c0.4 -3.2 3.7 -3.2 4.1 0c0.3 -3.6 3.1 -3.6 3.5 0c-1.3 -5.7 3.9 -5.7 4.4 0c0.4 -3.6 3.9 -3.6 4.3 0"/><path class="ink-red" d="M142.0 364.0c0.4 -3.4 3.9 -3.4 4.3 0c0.5 -3.3 4.1 -3.3 4.6 0c0.4 -3.1 3.8 -3.1 4.2 0c-1.1 -7.3 3.3 -7.3 3.7 0c-1.0 -6.6 3.0 -6.6 3.3 0M166.9 364.0c0.4 -2.5 3.3 -2.5 3.6 0c0.3 -2.5 3.1 -2.5 3.5 0c0.4 -3.5 3.3 -3.5 3.6 0c0.4 -3.0 3.2 -3.0 3.6 0c0.4 -2.6 3.8 -2.6 4.2 0c0.4 -3.9 3.8 -3.9 4.2 0c0.5 -3.1 4.1 -3.1 4.5 0c0.4 -2.9 3.9 -2.9 4.3 0M202.6 364.0c0.4 -3.0 4.0 -3.0 4.5 0c0.4 -3.0 3.3 -3.0 3.7 0c0.4 -3.3 3.4 -3.3 3.7 0c0.4 -3.7 3.9 -3.7 4.3 0c0.4 -3.6 3.6 -3.6 4.0 0c0.4 -2.4 4.0 -2.4 4.4 0c0.4 -3.3 3.5 -3.3 3.9 0c0.5 -3.7 4.1 -3.7 4.6 0c0.3 -3.7 3.0 -3.7 3.3 0M243.7 364.0c0.4 -2.5 3.8 -2.5 4.2 0c0.4 -3.6 3.7 -3.6 4.1 0c0.4 -2.8 3.7 -2.8 4.1 0c0.4 -3.6 3.8 -3.6 4.3 0M263.7 364.0c0.5 -3.2 4.1 -3.2 4.6 0c0.4 -3.5 3.6 -3.5 4.0 0c0.4 -3.7 4.0 -3.7 4.5 0c0.4 -3.7 3.7 -3.7 4.1 0c0.4 -3.9 3.9 -3.9 4.4 0M291.2 364.0c0.4 -3.1 3.8 -3.1 4.2 0c0.4 -3.6 3.4 -3.6 3.8 0c0.5 -2.7 4.1 -2.7 4.6 0c0.3 -2.9 3.1 -2.9 3.5 0c-1.4 -6.1 4.1 -6.1 4.6 0c0.3 -3.6 3.0 -3.6 3.4 0M142.0 380.0c0.4 -2.5 3.6 -2.5 4.0 0c0.3 -2.7 3.0 -2.7 3.4 0c0.4 -3.4 3.2 -3.4 3.5 0c0.4 -2.8 3.2 -2.8 3.5 0c0.3 -2.9 3.1 -2.9 3.4 0c0.4 -3.2 3.6 -3.2 4.0 0c0.4 -3.9 3.2 -3.9 3.6 0M171.6 380.0c0.5 -2.8 4.1 -2.8 4.5 0c0.3 -3.7 2.9 -3.7 3.3 0c0.4 -3.2 3.4 -3.2 3.7 0c0.4 -3.5 3.2 -3.5 3.6 0c-1.1 -6.4 3.2 -6.4 3.5 0c0.4 -3.5 3.3 -3.5 3.7 0c0.4 -2.7 3.6 -2.7 4.0 0M203.5 380.0c0.4 -3.4 4.0 -3.4 4.4 0c0.5 -3.3 4.1 -3.3 4.6 0c0.3 -2.4 3.1 -2.4 3.4 0c0.4 -3.7 3.9 -3.7 4.3 0c0.3 -3.5 3.0 -3.5 3.3 0M227.1 380.0c0.4 -3.3 3.5 -3.3 3.9 0c0.4 -3.7 4.0 -3.7 4.4 0c0.4 -2.5 3.4 -2.5 3.8 0c0.4 -3.3 3.9 -3.3 4.4 0c0.4 -3.7 3.5 -3.7 3.9 0c0.4 -2.5 3.3 -2.5 3.6 0c0.4 -3.5 3.3 -3.5 3.6 0M257.3 380.0c0.3 -3.1 3.0 -3.1 3.3 0c0.5 -3.4 4.1 -3.4 4.6 0c0.3 -3.5 2.9 -3.5 3.2 0c0.4 -3.1 3.2 -3.1 3.5 0c0.3 -3.7 2.9 -3.7 3.2 0c0.3 -2.9 3.1 -2.9 3.5 0c0.4 -2.9 3.4 -2.9 3.7 0c0.4 -3.5 3.3 -3.5 3.7 0c0.4 -3.6 3.2 -3.6 3.6 0M292.8 380.0c0.4 -2.9 3.6 -2.9 4.0 0c-1.3 -5.8 3.9 -5.8 4.4 0c0.3 -3.5 3.0 -3.5 3.3 0c0.3 -3.7 3.1 -3.7 3.5 0c-1.2 -6.0 3.6 -6.0 4.0 0c0.3 -3.1 3.1 -3.1 3.4 0c0.3 -3.1 3.0 -3.1 3.3 0"/></g>
+        </g>
+        <rect x="198" y="243" width="62" height="18" class="tape" transform="rotate(5 229 252)"/>
+
+        <!-- To the summary and back, and down to the note -->
+        <g filter="url(#wobble)" class="arrow">
+          <path pathLength="1" class="trace late" d="M342 318c14-8 26-10 38-8"/>
+          <path pathLength="1" class="trace later" d="M396 356c-6 66-30 128-82 160"/>
+          <path pathLength="1" class="trace late" d="M226 408c-4 20 4 38 0 56"/>
+          <path class="trace head late" d="M380 310l-11-6M380 310l-10 7"/>
+          <path class="trace head later" d="M314 516l12-3M314 516l4-12"/>
+          <path class="trace head late" d="M226 464l-8-10M226 464l8-9"/>
+        </g>
+
+        <!-- The summary, on the edge: a model on your Mac or elsewhere -->
+        <g filter="url(#crayon)">
+          <rect x="380" y="282" width="80" height="70" rx="10" class="fill-blue"/>
+          <path d="M420 296v42M399 317h42M406 303l28 28M434 303l-28 28" class="sparkle"/>
+        </g>
+
+        <!-- Meeting note, a notepad as in the icon -->
+        <rect x="140" y="482" width="176" height="130" rx="6" class="sheet-paper" filter="url(#wobble)"/>
+        <g filter="url(#wobble)" class="scribbles"><path class="highlight" d="M152 520h150M152 536h150M152 552h96"/><path class="ink-graphite" d="M156.0 520.0c0.4 -2.9 3.9 -2.9 4.3 0c-1.1 -6.3 3.4 -6.3 3.8 0c0.4 -3.7 3.8 -3.7 4.2 0c0.4 -2.4 3.7 -2.4 4.1 0c0.4 -3.4 3.3 -3.4 3.7 0c0.3 -3.2 3.0 -3.2 3.3 0c0.4 -3.4 3.9 -3.4 4.3 0c0.3 -3.8 3.1 -3.8 3.4 0c0.4 -3.2 3.6 -3.2 4.0 0M192.9 520.0c0.5 -3.5 4.1 -3.5 4.6 0c0.4 -3.9 3.9 -3.9 4.4 0c0.4 -2.5 3.7 -2.5 4.1 0c0.4 -3.5 3.2 -3.5 3.5 0c0.4 -3.0 3.3 -3.0 3.7 0c0.4 -4.0 3.5 -4.0 3.8 0c0.3 -3.3 3.1 -3.3 3.4 0c0.4 -2.8 3.6 -2.8 4.0 0M231.2 520.0c0.4 -2.6 3.9 -2.6 4.3 0c0.4 -3.8 3.9 -3.8 4.4 0c0.4 -3.7 3.2 -3.7 3.5 0c0.3 -2.5 3.1 -2.5 3.5 0c0.3 -4.0 2.9 -4.0 3.2 0c0.5 -2.9 4.1 -2.9 4.5 0c0.4 -3.0 3.7 -3.0 4.1 0c0.4 -2.4 3.6 -2.4 4.0 0c0.3 -2.6 3.1 -2.6 3.5 0c0.4 -2.7 3.4 -2.7 3.7 0M275.3 520.0c0.4 -3.4 3.6 -3.4 4.0 0c0.3 -2.6 2.9 -2.6 3.3 0c0.5 -3.2 4.1 -3.2 4.5 0c0.4 -3.5 3.4 -3.5 3.8 0c0.4 -3.2 3.8 -3.2 4.3 0M156.0 536.0c0.4 -3.3 3.4 -3.3 3.8 0c0.4 -3.2 4.0 -3.2 4.5 0c0.4 -2.9 3.4 -2.9 3.8 0c0.3 -3.8 2.9 -3.8 3.3 0c0.4 -3.6 3.8 -3.6 4.2 0c0.4 -2.5 3.3 -2.5 3.6 0c0.3 -3.2 3.0 -3.2 3.4 0c-1.1 -6.9 3.4 -6.9 3.8 0c0.4 -2.9 3.5 -2.9 3.9 0M196.1 536.0c0.3 -3.9 3.0 -3.9 3.3 0c0.4 -3.1 3.7 -3.1 4.1 0c0.4 -3.6 3.9 -3.6 4.3 0c0.4 -2.6 3.6 -2.6 4.0 0c0.4 -3.3 3.9 -3.3 4.3 0M222.1 536.0c0.4 -2.9 3.2 -2.9 3.5 0c0.3 -3.7 3.0 -3.7 3.3 0c0.4 -3.3 3.4 -3.3 3.8 0c-1.0 -7.3 2.9 -7.3 3.3 0M239.7 536.0c0.5 -3.2 4.1 -3.2 4.5 0c0.3 -3.9 3.1 -3.9 3.5 0c0.4 -3.7 4.0 -3.7 4.5 0c0.4 -2.7 3.3 -2.7 3.7 0c0.4 -2.7 4.0 -2.7 4.4 0c0.4 -3.8 3.7 -3.8 4.1 0c0.3 -3.6 2.9 -3.6 3.3 0M270.2 536.0c0.4 -2.6 4.0 -2.6 4.4 0c0.4 -3.1 3.8 -3.1 4.2 0c0.3 -2.9 3.0 -2.9 3.3 0c0.4 -2.7 3.8 -2.7 4.2 0c0.4 -3.7 3.2 -3.7 3.5 0c0.4 -3.8 3.3 -3.8 3.7 0M156.0 552.0c0.4 -2.8 4.0 -2.8 4.5 0c-1.2 -7.5 3.7 -7.5 4.1 0c0.4 -3.2 3.4 -3.2 3.8 0c0.3 -2.9 2.9 -2.9 3.3 0c0.4 -2.5 3.2 -2.5 3.6 0c0.4 -2.8 3.2 -2.8 3.6 0M181.3 552.0c0.3 -4.0 3.1 -4.0 3.5 0c0.3 -3.6 2.9 -3.6 3.2 0c0.4 -3.2 3.4 -3.2 3.7 0c0.3 -3.4 3.1 -3.4 3.5 0c0.4 -3.7 3.3 -3.7 3.7 0c0.4 -3.8 3.5 -3.8 3.9 0c0.4 -3.9 3.7 -3.9 4.2 0c0.3 -2.7 3.1 -2.7 3.4 0M214.2 552.0c0.4 -3.7 3.4 -3.7 3.8 0c0.4 -3.2 3."/><path class="ink-graphite light" d="M156.0 576.0c0.4 -3.1 3.4 -3.1 3.8 0c-1.0 -7.5 3.0 -7.5 3.3 0c0.4 -2.8 3.8 -2.8 4.3 0c0.4 -2.8 3.2 -2.8 3.6 0c0.4 -3.0 3.5 -3.0 3.8 0M177.4 576.0c-1.2 -6.3 3.6 -6.3 4.1 0c-1.2 -6.2 3.7 -6.2 4.1 0c0.4 -3.3 3.8 -3.3 4.2 0c0.4 -3.0 4.0 -3.0 4.4 0c0.4 -3.7 3.9 -3.7 4.4 0c0.4 -2.7 3.2 -2.7 3.5 0c0.4 -2.7 3.6 -2.7 4.0 0c0.4 -2.9 3.2 -2.9 3.5 0c0.4 -3.5 3.4 -3.5 3.8 0c0.4 -3.0 4.0 -3.0 4.4 0M219.6 576.0c0.4 -2.4 3.3 -2.4 3.7 0c0.3 -3.0 3.1 -3.0 3.5 0c0.4 -2.8 4.0 -2.8 4.5 0c0.4 -3.9 3.3 -3.9 3.7 0c0.4 -3.6 3.3 -3.6 3.7 0c-1.3 -6.1 4.0 -6.1 4.5 0c-1.1 -7.3 3.4 -7.3 3.7 0c0.4 -3.2 3.3 -3.2 3.7 0M254.3 576.0c-1.1 -5.8 3.2 -5.8 3.5 0c-1.2 -6.1 3.6 -6.1 4.0 0c0.4 -2.6 3.4 -2.6 3.8 0c0.4 -3.6 3.8 -3.6 4.2 0c0.4 -2.7 3.7 -2.7 4.1 0c0.4 -3.0 3.2 -3.0 3.6 0M156.0 592.0c0.4 -2.7 3.2 -2.7 3.6 0c-1.0 -6.8 2.9 -6.8 3.3 0c0.4 -4.0 3.6 -4.0 4.0 0c0.4 -3.9 3.3 -3.9 3.6 0c0.4 -3.5 3.2 -3.5 3.5 0M181.7 592.0c0.4 -2.5 3.2 -2.5 3.5 0c0.4 -2.5 3.4 -2.5 3.8 0c0.4 -3.2 3.4 -3.2 3.7 0c0.4 -3.0 3.2 -3.0 3.6 0c0.4 -3.5 3.5 -3.5 3.9 0c-1.1 -6.2 3.2 -6.2 3.5 0c0.4 -3.3 3.4 -3.3 3.8 0c0.4 -3.5 3.8 -3.5 4.2 0c0.3 -3.0 2.9 -3.0 3.2 0c0.3 -2.5 3.0 -2.5 3.3 0M222.5 592.0c0.4 -2.8 3.5 -2.8 3.9 0c0.3 -3.8 2.9 -3.8 3.2 0c0.4 -3.5 3.6 -3.5 4.0 0c0.3 -3.4 3.1 -3.4 3.5 0c0.5 -3.3 4.1 -3.3 4.5 0c0.5 -3.4 4.1 -3.4 4.5 0c0.4 -3.1 3.7 -3.1 4.1 0M255.2 592.0c0.4 -3.9 4.0 -3.9 4.4 0c0.3 -3.2 2.9 -3.2 3.3 0c0.4 -4.0 3.3 -4.0 3.6 0c0.3 -2.8 3.1 -2.8 3.4 0c0.4 -2.4 3.7 -2.4 4.2 0c0.4 -2.8 3.6 -2.8 4.0 0c0.4 -3.3 3.5 -3.3 3.9 0c0.4 -3.7 3.7 -3.7 4.1 0c0.5 -3.0 4.1 -3.0 4.6 0"/>
+          <path d="M146 588l4-8 4 8-8-5h8z" class="sparkle-red"/>
+        </g>
+        <g filter="url(#wobble)" class="outline">
+          <path d="M184 494c-8 0-10-22 0-22s8 22 0 22M272 494c-8 0-10-22 0-22s8 22 0 22"/>
+        </g>
+
+        <text x="66" y="66" class="hand">your mic</text>
+        <text x="248" y="66" class="hand">the call</text>
+        <text x="240" y="186" class="hand small graphite-text">Meet, Zoom, Teams…</text>
+        <text x="30" y="430" class="hand">the transcript</text>
+        <text x="30" y="448" class="hand small graphite-text">Whisper or Parakeet</text>
+        <text x="30" y="294" class="hand red-text">the audio</text>
+        <text x="30" y="314" class="hand red-text">stays</text>
+        <text x="30" y="334" class="hand red-text">in here</text>
+        <text x="408" y="380" class="hand">the summary</text>
+        <text x="408" y="398" class="hand small graphite-text">on your Mac, or</text>
+        <text x="408" y="415" class="hand small graphite-text">a provider you</text>
+        <text x="408" y="432" class="hand small graphite-text">choose</text>
+        <text x="328" y="566" class="hand">meeting note</text>
+        <text x="328" y="584" class="hand small graphite-text">in your Obsidian</text>
+        <text x="328" y="601" class="hand small graphite-text">vault</text>
+      </svg>
+    </figure>
+  </header>
+
+  <section class="row" aria-labelledby="what">
+    <div class="main">
+      <h2 id="what">What it does</h2>
+      <ul class="notes">
+        <li>Records both sides of a call: your microphone and the call’s audio, from Meet, Zoom, Teams or any other app.
+          <span class="note">⌃⌥⌘R starts and stops it from any app</span></li>
+        <li>Transcribes on your Mac with Whisper or Parakeet, in Italian, English and 23 other European languages.</li>
+        <li>Tells the speakers apart by voice, and names them when the call makes it clear, or when you write the names in the note.</li>
+        <li>Writes Markdown into Obsidian: the note opens when the meeting starts, the summary goes on top, the transcript in a file of its own.</li>
+        <li>Marks the moments that matter: press ⌃⌥⌘M and that passage gets a ⭐ in the transcript and priority in the summary.</li>
+        <li>Names the note after the calendar event in progress and lists who was invited, if you allow it.</li>
+        <li>Offers to start when a call app takes the microphone, and to stop when it lets go.</li>
+        <li>Keeps templates and a vocabulary as notes in your vault: write how the summary should look, and the names that speech recognition gets wrong.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="meeting">
+    <div class="main">
+      <h2 id="meeting">A meeting, from start to stop</h2>
+      <ol class="steps">
+        <li>Start from the menu bar, with ⌃⌥⌘R, or from the notification when a call begins.</li>
+        <li>Write your own notes in the meeting note that opens in Obsidian. Takku never changes them, and uses them to steer the summary.</li>
+        <li>Stop. Takku finishes the transcript on your Mac.</li>
+        <li>The summary appears at the top of the note, each point with the time it comes from, followed by a link to the transcript. A notification tells you when it’s ready.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="data">
+    <div class="main">
+      <h2 id="data">Where your data is</h2>
+      <div class="boxed sketch">
+        <dl>
+          <dt>Audio</dt>
+          <dd>On your Mac, deleted after 7 days.</dd>
+          <dt>Notes and transcripts</dt>
+          <dd>In your vault, as plain Markdown files.</dd>
+          <dt>Summary</dt>
+          <dd>Written by a model on your Mac (llama.cpp, Ollama, LM Studio) or by the OpenAI-compatible provider you choose, for example one hosted in the EU. It receives the transcript and your notes, <mark>never the audio</mark>.</dd>
+          <dt>API keys</dt>
+          <dd>In the macOS Keychain.</dd>
+          <dt>Nothing else</dt>
+          <dd>The transcription model is downloaded once. A daily update check asks GitHub for the latest version and sends nothing about you or your meetings.</dd>
+        </dl>
+        <p class="note note-boxed">Recording a meeting may need the consent of the others: tell them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="install">
+    <div class="main">
+      <h2 id="install">Install</h2>
+      <ol class="steps">
+        <li>Run <code>brew install --cask mameli/takku/takku</code>, or <a href="https://github.com/mameli/takku/releases/latest">download the zip</a> and move Takku to Applications.</li>
+        <li>Open Takku. macOS says it can’t verify the app, because Takku is signed but not notarized by Apple: press Done.
+          <span class="note">notarizing needs a paid Apple developer account</span></li>
+        <li>In System Settings, Privacy &amp; Security, press Open Anyway next to Takku and confirm with your password.</li>
+        <li>Choose your vault and a summary provider in Settings. The <a href="https://github.com/mameli/takku#first-setup">first setup guide</a> walks you through it.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="row">
+    <div class="main">
+      <div class="title-block-wrap sketch">
+      <table class="title-block">
+        <tr>
+          <th scope="row">Project</th>
+          <td>Takku, a menu bar app for macOS</td>
+          <th scope="row">Drawn by</th>
+          <td><a href="https://github.com/mameli">mameli</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Source</th>
+          <td><a href="https://github.com/mameli/takku">github.com/mameli/takku</a></td>
+          <th scope="row">License</th>
+          <td>MIT</td>
+        </tr>
+        <tr>
+          <th scope="row">Requires</th>
+          <td>Apple Silicon, macOS 15 or later</td>
+          <th scope="row">Releases</th>
+          <td><a href="https://github.com/mameli/takku/releases">all versions</a></td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
