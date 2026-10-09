@@ -76,7 +76,7 @@ svg = f'''<figure class="schematic">
         </defs>
 
         <!-- Your Mac -->
-        <rect x="20" y="42" width="378" height="598" rx="28" class="boundary" filter="url(#wobble)"/>
+        <rect x="20" y="42" width="490" height="598" rx="28" class="boundary" filter="url(#wobble)"/>
         <text x="26" y="30" class="hand graphite-text">your Mac</text>
 
         <!-- Microphone, in red: you -->
@@ -119,18 +119,18 @@ svg = f'''<figure class="schematic">
 
         <!-- To the summary and back, and down to the note -->
         <g filter="url(#wobble)" class="arrow">
-          <path pathLength="1" class="trace late" d="M342 318c10-6 20-8 30-8"/>
-          <path pathLength="1" class="trace later" d="M382 356c-2 60-30 124-112 156"/>
+          <path pathLength="1" class="trace late" d="M344 324c14-6 30-8 42-6"/>
+          <path pathLength="1" class="trace later" d="M410 366c-2 66-40 126-140 146"/>
           <path pathLength="1" class="trace late" d="M220 408c-2 24-24 40-40 56"/>
-          <path class="trace head late" d="M372 310l-11-6M372 310l-10 7"/>
-          <path class="trace head later" d="M270 512l12 3M270 512l7-10"/>
+          <path class="trace head late" d="M386 318l-11-6M386 318l-10 7"/>
+          <path class="trace head later" d="M270 512l11 5M270 512l8-9"/>
           <path class="trace head late" d="M180 464l12-2M180 464l2-12"/>
         </g>
 
-        <!-- The summary, on the edge: a model on your Mac or elsewhere -->
+        <!-- The summary, labelled above as the mic and the call -->
         <g filter="url(#crayon)">
-          <rect x="372" y="284" width="72" height="64" rx="10" class="fill-blue"/>
-          <path d="M408 298v36M390 316h36M395 303l26 26M421 303l-26 26" class="sparkle"/>
+          <rect x="388" y="294" width="72" height="64" rx="10" class="fill-blue"/>
+          <path d="M424 308v36M406 326h36M411 313l26 26M437 313l-26 26" class="sparkle"/>
         </g>
 
         <!-- Meeting note, a notepad as in the icon -->
@@ -150,10 +150,10 @@ svg = f'''<figure class="schematic">
         <text x="30" y="294" class="hand red-text">the audio</text>
         <text x="30" y="314" class="hand red-text">stays</text>
         <text x="30" y="334" class="hand red-text">in here</text>
-        <text x="406" y="376" class="hand">the summary</text>
-        <text x="406" y="395" class="hand small graphite-text">on your Mac, or</text>
-        <text x="406" y="413" class="hand small graphite-text">a provider you</text>
-        <text x="406" y="431" class="hand small graphite-text">choose</text>
+        <text x="386" y="226" class="hand">the summary</text>
+        <text x="386" y="245" class="hand small graphite-text">on your Mac, or</text>
+        <text x="386" y="263" class="hand small graphite-text">a provider you</text>
+        <text x="386" y="281" class="hand small graphite-text">choose</text>
         <text x="280" y="566" class="hand">meeting note</text>
         <text x="280" y="585" class="hand small graphite-text">in your Obsidian</text>
         <text x="280" y="603" class="hand small graphite-text">vault</text>

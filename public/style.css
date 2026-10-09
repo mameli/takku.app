@@ -585,13 +585,12 @@ h2::after {
   transform-origin: left;
 }
 
-/* The title block, in the bottom right corner as in a technical drawing */
+/* The title block of a technical drawing, aligned with the notes */
 footer .main {
   padding-bottom: 8px;
 }
 .title-block-wrap {
-  margin-left: auto;
-  width: min(100%, 44rem);
+  width: min(100%, 42rem);
 }
 .title-block {
   width: 100%;
@@ -690,7 +689,7 @@ footer .main {
   h2 { font-size: 2rem; line-height: 44px; }
   .lead { font-size: 1.25rem; line-height: 32px; }
   .command { font-size: 0.875rem; padding: 12px 14px; }
-  .schematic { grid-column: 2; width: auto; margin: 0 -4px 48px 8px; }
+  .schematic { grid-column: 2; width: auto; margin: 0 4px 48px 8px; }
 
   .notes .note {
     position: static;
