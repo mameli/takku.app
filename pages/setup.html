@@ -16,10 +16,8 @@ description: Install Takku on your Mac, allow the microphone and system audio, c
       <h2 id="install">Install</h2>
       <ol class="steps">
         <li><a href="https://github.com/mameli/Takku/releases/latest/download/Takku.zip">Download Takku</a>, open the zip and move Takku to Applications. With Homebrew: <code>brew install <span class="nobr">--cask</span> mameli/takku/takku</code></li>
-        <li>Open Takku. macOS says it can’t verify the app, because Takku is signed but not notarized by Apple: press Done.</li>
-        <li>In System Settings, Privacy &amp; Security, scroll down, press Open Anyway next to Takku and confirm with your password.</li>
+        <li>Open Takku. It’s notarized by Apple, so it opens like any other app.</li>
       </ol>
-      <p>To skip steps 2 and 3, run <code>xattr -dr com.apple.quarantine /Applications/Takku.app</code> in Terminal before opening Takku. On a Mac managed by your company, IT may block apps that aren’t notarized: you can <a href="https://github.com/mameli/Takku#build-from-source">build Takku from source</a> instead.</p>
       <p>Takku lives in the menu bar, not in the Dock.</p>
     </div>
   </section>
@@ -28,9 +26,11 @@ description: Install Takku on your Mac, allow the microphone and system audio, c
     <div class="main">
       <h2 id="first-setup">First setup</h2>
       <ol class="steps">
-        <li>Start a meeting from the menu bar. macOS asks for the microphone and for System Audio Recording Only: allow both. The first time, Takku also downloads the transcription model, about 650 MB, and the menu shows the progress.</li>
-        <li>Open Settings from the Takku menu and choose your vault under Obsidian Vault. Takku creates a Meetings folder, with a Notes template you can change.</li>
-        <li>In Summary Profiles, add a profile: name, base URL, model, max context and, if the provider needs one, an API key, which is kept in the macOS Keychain. Press Test connection.</li>
+        <li>The first time you open Takku, a welcome window walks you through the steps below. You can do each one later too.</li>
+        <li>Choose your Obsidian vault. Takku creates a Meetings folder, with a Notes template you can change.</li>
+        <li>Allow the microphone and System Audio Recording Only when macOS asks.</li>
+        <li>Download the transcription model, about 650 MB. It’s prepared for your Mac once, which takes a few minutes. If you skip it, it happens during your first meeting.</li>
+        <li>For summaries, open Settings from the Takku menu and, in Summary Profiles, add a profile: name, base URL, model, max context and, if the provider needs one, an API key, which is kept in the macOS Keychain. Press Test connection.</li>
         <li>If you want Takku to start with your Mac, turn on Open at login in Settings, General.</li>
       </ol>
 
@@ -53,7 +53,8 @@ description: Install Takku on your Mac, allow the microphone and system audio, c
   <section class="row" aria-labelledby="updating">
     <div class="main">
       <h2 id="updating">Updating</h2>
-      <p>With Homebrew, run <code>brew upgrade <span class="nobr">--cask</span> takku</code>. Otherwise quit Takku, replace it in Applications with the new version and repeat steps 2 and 3 of the install. Your settings, profiles, API keys and models are kept.</p>
+      <p>With Homebrew, run <code>brew upgrade <span class="nobr">--cask</span> takku</code>. Otherwise quit Takku and replace it in Applications with the new version. Your settings, profiles, API keys and models are kept.</p>
+      <p>Coming from a 0.x version: from 1.0 Takku is signed with an Apple Developer ID, so macOS asks once more for the microphone, the system audio and the calendars, and for your password to let Takku read your saved API keys (choose Always Allow).</p>
     </div>
   </section>
 
