@@ -62,7 +62,7 @@ def footer(current):
         </tr>
         <tr>
           <th scope="row">Source</th>
-          <td><a href="https://github.com/mameli/takku">mameli/takku</a></td>
+          <td><a href="https://github.com/mameli/Takku">mameli/Takku</a></td>
           <th scope="row">License</th>
           <td>MIT</td>
         </tr>
@@ -70,7 +70,7 @@ def footer(current):
           <th scope="row">Requires</th>
           <td>Apple Silicon, macOS 15 or later</td>
           <th scope="row">Releases</th>
-          <td><a href="https://github.com/mameli/takku/releases">all versions</a></td>
+          <td><a href="https://github.com/mameli/Takku/releases">all versions</a></td>
         </tr>
       </table>
       </div>

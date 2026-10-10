@@ -1,6 +1,6 @@
 # takku.app
 
-The landing page of [Takku](https://github.com/mameli/takku), served by Cloudflare Workers at [takku.app](https://takku.app): every push to `main` is deployed with `npx wrangler deploy`, with no build step.
+The landing page of [Takku](https://github.com/mameli/Takku), served by Cloudflare Workers at [takku.app](https://takku.app): every push to `main` is deployed with `npx wrangler deploy`, with no build step.
 
 Static pages, without JavaScript, in `public/`: the home page `index.html`, the sheets `setup`, `guide`, `faq` and `privacy`, and `style.css`. `wrangler.jsonc` tells Cloudflare to serve that folder as it is. It looks like a sheet of squared paper with a hand-drawn schematic of how Takku works; in dark mode it becomes a blueprint.
 
