@@ -1,0 +1,71 @@
+<!--
+title: Where your data goes, with Takku
+description: What Takku keeps on your Mac, what it sends and to whom: the audio never leaves your Mac, and you choose who reads the transcript.
+-->
+  <header class="row">
+    <div class="main">
+      <a class="home" href="/"><img src="/icon.png" alt="" width="44" height="44">Takku</a>
+      <h1 class="page-title">Where your data goes</h1>
+      <p class="lead">Takku runs on your Mac. This page lists everything it keeps, everything it sends, and to whom.</p>
+      <p>Takku has no account, no analytics and no server of its own. It’s open source, so all of this can be <a href="https://github.com/mameli/takku">checked in the code</a>.</p>
+    </div>
+  </header>
+
+  <section class="row" aria-labelledby="stays">
+    <div class="main">
+      <h2 id="stays">What stays on your Mac</h2>
+      <div class="examples sketch">
+        <dl>
+          <dt>The audio</dt>
+          <dd>Kept in Takku’s folder, about 20 MB per hour of meeting, and deleted after 7 days. You can keep it from 1 to 90 days in Settings, Recordings.</dd>
+          <dt>The transcription</dt>
+          <dd>Whisper or Parakeet turn speech into text on your Mac, and the voices are told apart on your Mac too.</dd>
+          <dt>Notes and transcripts</dt>
+          <dd>In your vault, as plain Markdown files, with your templates and vocabulary.</dd>
+          <dt>API keys</dt>
+          <dd>In the macOS Keychain.</dd>
+          <dt>Your calendar</dt>
+          <dd>Read through macOS, only if you turn it on.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="leaves">
+    <div class="main">
+      <h2 id="leaves">What leaves your Mac</h2>
+      <div class="examples sketch">
+        <dl>
+          <dt>To the summary provider</dt>
+          <dd>The transcript, your notes, the template, the terms of your vocabulary and, with the calendar on, the names of who was invited. <mark>Never the audio.</mark> With a model on your Mac, such as llama.cpp, Ollama or LM Studio, nothing leaves at all.</dd>
+          <dt>From Hugging Face</dt>
+          <dd>The transcription model and a small model that tells voices apart, downloaded once. Nothing about you or your meetings is sent.</dd>
+          <dt>To GitHub</dt>
+          <dd>Once a day Takku asks for the latest version. The request carries nothing about you. Turn it off in Settings, General, Check for updates.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="provider">
+    <div class="main">
+      <h2 id="provider">Choosing a provider</h2>
+      <p>Takku doesn’t check where a provider processes your data. If you or your company have rules, use a model on your Mac, or a provider whose terms fit them, for example Regolo.ai in Italy or Mistral in France. Read the terms before using it for real meetings.</p>
+      <p>The <a href="/setup#first-setup">setup</a> has profiles to start from.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="consent">
+    <div class="main">
+      <h2 id="consent">Recording other people</h2>
+      <p>Recording a meeting may need the consent of the others. Tell them you’re recording, and follow the rules that apply to you.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="site">
+    <div class="main">
+      <h2 id="site">This website</h2>
+      <p>No cookies, no scripts and no trackers. The fonts are served from the site itself.</p>
+    </div>
+  </section>
+

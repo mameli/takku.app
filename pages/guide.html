@@ -1,0 +1,70 @@
+<!--
+title: Using Takku
+description: Record a meeting, mark the moments that matter, and teach Takku your templates, your words and the names of the people you meet.
+-->
+  <header class="row">
+    <div class="main">
+      <a class="home" href="/"><img src="/icon.png" alt="" width="44" height="44">Takku</a>
+      <h1 class="page-title">Using Takku</h1>
+      <p class="lead">Recording takes one shortcut. The rest of this page is how to get better summaries: templates, a vocabulary and the names of the people you meet.</p>
+    </div>
+  </header>
+
+  <section class="row" aria-labelledby="recording">
+    <div class="main">
+      <h2 id="recording">A meeting</h2>
+      <ol class="steps">
+        <li>Start from the menu bar or with ⌃⌥⌘R, from any app. While Takku records, its icon is a red dot and the menu shows how long the meeting has lasted.
+          <span class="note">when a call app holds the microphone for 15 seconds, a notification offers to start</span></li>
+        <li>The meeting note opens in Obsidian. Write your own notes under Personal notes: Takku never changes them, and uses them to steer the summary.</li>
+        <li>Press ⌃⌥⌘M when something matters. That passage gets a ⭐ in the transcript, and the summary gives it priority.</li>
+        <li>Stop from the menu or with ⌃⌥⌘R again. Takku finishes the transcript, writes the summary at the top of the note with the time of each point, links the transcript and gives the note a short title. A notification tells you when it’s done.</li>
+      </ol>
+      <p>If Takku hears nothing from the microphone or from the call for 2 minutes, the menu says so. If it has heard nothing since the start, a notification tells you which permission to check.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="retry">
+    <div class="main">
+      <h2 id="retry">Another summary</h2>
+      <p>The template and the summary profile are chosen in the Takku menu. To write a meeting’s summary again, with another template or after an error, open Recent meetings and press Retry: Takku uses the template and profile selected now.</p>
+      <p>Choose Transcript as the profile to get only the transcript, with no summary.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="templates">
+    <div class="main">
+      <h2 id="templates">Templates</h2>
+      <p>A template is a note in <code>Meetings/_Templates/</code>: its text tells the model what to write and how, in your own words. Create one from Settings, Templates, then edit it in Obsidian like any other note.</p>
+      <p>The summary is written in the language of the meeting. To always get it in one language, add <code>summary_language: en</code> (or <code>it</code>, <code>fr</code>…) to the template’s frontmatter.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="vocabulary">
+    <div class="main">
+      <h2 id="vocabulary">Vocabulary</h2>
+      <p>Names, acronyms and technical words that speech recognition gets wrong go in <code>Meetings/_Vocabulary.md</code>, which you open from Settings, Vocabulary. One term per line: the right spelling, then after <code>=</code> what is heard instead, then after <code>|</code> a short description. The last two are optional.</p>
+      <pre class="sketch"><code>- Kubernetes = cubernetes, kubernetis
+- dbt = di bi ti | data transformation tool
+- Holacracy</code></pre>
+      <p>The variants are replaced in the transcript as whole words, so don’t list one that is also an ordinary word. Every term goes to the model, which spells it right in the summary.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="speakers">
+    <div class="main">
+      <h2 id="speakers">Speaker names</h2>
+      <p>The transcript tells voices apart as Speaker 1, Speaker 2 and so on, and the summary names them when the call makes it clear who they are. When it can’t, read the transcript, write the names in the note’s frontmatter and press Retry:</p>
+      <pre class="sketch"><code>speakers:
+  - Speaker 1 = Mario Rossi
+  - Speaker 3 = Anna Bianchi</code></pre>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="calendar">
+    <div class="main">
+      <h2 id="calendar">Calendar</h2>
+      <p>Turn on Use the calendar in Settings, General, and allow access. When a meeting starts during an event, the note takes the event’s name and lists who was invited, which helps the summary name the speakers. If the list is wrong, correct it in the note: it counts on the next Retry.</p>
+    </div>
+  </section>
+

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Takku: questions and answers</title>
+  <meta name="description" content="Is Takku free, does a bot join the call, does it work offline, with headphones, on a company Mac? Short answers.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f1f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1d3f73" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Takku">
+  <meta property="og:title" content="Takku: questions and answers">
+  <meta property="og:description" content="Is Takku free, does a bot join the call, does it work offline, with headphones, on a company Mac? Short answers.">
+  <meta property="og:url" content="https://takku.app/faq">
+  <meta property="og:image" content="https://takku.app/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/kalam-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/literata.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="sheet">
+  <span class="frame" aria-hidden="true"></span>
+  <span class="ruler ruler-top" aria-hidden="true"></span>
+  <span class="ruler ruler-left" aria-hidden="true"></span>
+  <span class="margin-rule" aria-hidden="true"></span>
+  <span class="hole hole-tl" aria-hidden="true"></span>
+  <span class="hole hole-tr" aria-hidden="true"></span>
+  <span class="hole hole-bl" aria-hidden="true"></span>
+  <span class="hole hole-br" aria-hidden="true"></span>
+
+  <header class="row">
+    <div class="main">
+      <a class="home" href="/"><img src="/icon.png" alt="" width="44" height="44">Takku</a>
+      <h1 class="page-title">Questions</h1>
+      <p class="lead">Short answers to what people ask before they try Takku.</p>
+    </div>
+  </header>
+
+  <section class="row" aria-label="Questions and answers">
+    <div class="main">
+      <dl class="qa">
+        <dt>Is it free?</dt>
+        <dd>Yes, and open source under the MIT license. If the summary is written by a paid provider, you pay the provider directly. A model on your Mac costs nothing.</dd>
+
+        <dt>Does a bot join my call?</dt>
+        <dd>No. Takku records on your Mac, from your microphone and from what your Mac plays, so nobody in the call sees it. That is why you should tell them you’re recording.</dd>
+
+        <dt>Which call apps does it work with?</dt>
+        <dd>Any: Meet, Zoom, Teams, Slack, a call in the browser. Takku records everything your Mac plays, not one app, so pause music and videos during a meeting.</dd>
+
+        <dt>Does it work with headphones?</dt>
+        <dd>Yes, with headphones, AirPods or the Mac’s own speakers. Echo cancellation keeps the others’ voices out of your microphone.</dd>
+
+        <dt>Do I need Obsidian?</dt>
+        <dd>Takku writes Markdown files into a folder you choose. Obsidian is the nicest way to read them, with links between the note and the transcript, but any folder works.</dd>
+
+        <dt>Which languages does it understand?</dt>
+        <dd>Italian, English and 23 other European languages, one language per meeting. The summary can be written in any language.</dd>
+
+        <dt>Does it work offline?</dt>
+        <dd>The transcription does, once the model has been downloaded. The summary does too, if the model runs on your Mac.</dd>
+
+        <dt>How long until the summary is ready?</dt>
+        <dd>Takku transcribes the call in pieces while it goes on, so when you stop only the last few minutes are left. Then the summary takes as long as your model needs, and a notification tells you when it’s there.</dd>
+
+        <dt>Does the summary provider get my audio?</dt>
+        <dd>Never. It receives the transcript and your notes. <a href="/privacy">Where your data goes</a> lists everything that leaves your Mac.</dd>
+
+        <dt>How is it different from Granola?</dt>
+        <dd>Takku transcribes on your Mac, writes into your own vault instead of an online account, and lets you choose who writes the summary. There is no account and no subscription.</dd>
+
+        <dt>Why does macOS say it can’t verify Takku?</dt>
+        <dd>Takku is signed, but not notarized by Apple: notarizing needs a paid developer account. You open it once with Open Anyway, as the <a href="/setup#install">setup</a> shows.</dd>
+
+        <dt>Can I use it on a Mac managed by my company?</dt>
+        <dd>Only if IT allows apps that aren’t notarized. Otherwise you can <a href="https://github.com/mameli/takku#build-from-source">build Takku from source</a>, or ask IT. Check your company’s rules on recording meetings and on summary providers too.</dd>
+
+        <dt>Does it run on an Intel Mac?</dt>
+        <dd>No. Takku needs Apple Silicon and macOS 15 or later.</dd>
+
+        <dt>The summary gets a name wrong. What can I do?</dt>
+        <dd>Add the word to your vocabulary, or tell Takku who each speaker is, then press Retry. The <a href="/guide#vocabulary">guide</a> shows how.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer class="row">
+    <div class="main">
+      <div class="title-block-wrap sketch">
+      <table class="title-block">
+        <tr>
+          <th scope="row">Sheets</th>
+          <td colspan="3"><nav aria-label="Pages" class="sheets"><a class="sheet-link" href="/">1 Takku</a> <a class="sheet-link" href="/setup">2 Setup</a> <a class="sheet-link" href="/guide">3 Guide</a> <span class="sheet-link" aria-current="page">4 FAQ</span> <a class="sheet-link" href="/privacy">5 Privacy</a></nav></td>
+        </tr>
+        <tr>
+          <th scope="row">Project</th>
+          <td>Takku, a menu bar app for macOS</td>
+          <th scope="row">Drawn by</th>
+          <td><a href="https://github.com/mameli">mameli</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Source</th>
+          <td><a href="https://github.com/mameli/takku">mameli/takku</a></td>
+          <th scope="row">License</th>
+          <td>MIT</td>
+        </tr>
+        <tr>
+          <th scope="row">Requires</th>
+          <td>Apple Silicon, macOS 15 or later</td>
+          <th scope="row">Releases</th>
+          <td><a href="https://github.com/mameli/takku/releases">all versions</a></td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

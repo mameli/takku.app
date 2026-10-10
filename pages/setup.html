@@ -1,0 +1,59 @@
+<!--
+title: Set up Takku
+description: Install Takku on your Mac, allow the microphone and system audio, choose your Obsidian vault and who writes the summary.
+-->
+  <header class="row">
+    <div class="main">
+      <a class="home" href="/"><img src="/icon.png" alt="" width="44" height="44">Takku</a>
+      <h1 class="page-title">Set up Takku</h1>
+      <p class="lead">Install the app, allow the recording, then choose your vault and who writes the summary. You do it once.</p>
+      <p>You need a Mac with Apple Silicon and macOS 15 or later, and an Obsidian vault. Any folder works: Obsidian is only needed to open the notes.</p>
+    </div>
+  </header>
+
+  <section class="row" aria-labelledby="install">
+    <div class="main">
+      <h2 id="install">Install</h2>
+      <ol class="steps">
+        <li><a href="https://github.com/mameli/takku/releases/latest/download/Takku.zip">Download Takku</a>, open the zip and move Takku to Applications. With Homebrew: <code>brew install <span class="nobr">--cask</span> mameli/takku/takku</code></li>
+        <li>Open Takku. macOS says it can’t verify the app, because Takku is signed but not notarized by Apple: press Done.</li>
+        <li>In System Settings, Privacy &amp; Security, scroll down, press Open Anyway next to Takku and confirm with your password.</li>
+      </ol>
+      <p>To skip steps 2 and 3, run <code>xattr -dr com.apple.quarantine /Applications/Takku.app</code> in Terminal before opening Takku. On a Mac managed by your company, IT may block apps that aren’t notarized: you can <a href="https://github.com/mameli/takku#build-from-source">build Takku from source</a> instead.</p>
+      <p>Takku lives in the menu bar, not in the Dock.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="first-setup">
+    <div class="main">
+      <h2 id="first-setup">First setup</h2>
+      <ol class="steps">
+        <li>Start a meeting from the menu bar. macOS asks for the microphone and for System Audio Recording Only: allow both. The first time, Takku also downloads the transcription model, about 650 MB, and the menu shows the progress.</li>
+        <li>Open Settings from the Takku menu and choose your vault under Obsidian Vault. Takku creates a Meetings folder, with a Notes template you can change.</li>
+        <li>In Summary Profiles, add a profile: name, base URL, model, max context and, if the provider needs one, an API key, which is kept in the macOS Keychain. Press Test connection.</li>
+        <li>If you want Takku to start with your Mac, turn on Open at login in Settings, General.</li>
+      </ol>
+
+      <div class="examples sketch">
+        <h3>Profiles to start from</h3>
+        <dl>
+          <dt>On your Mac</dt>
+          <dd>Start <code>llama-server -hf ggml-org/gemma-4-E4B-it-GGUF:Q4_0 -c 32768</code>, then use the base URL <code>http://localhost:8080/v1</code> and the model <code>ggml-org/gemma-4-E4B-it-GGUF:Q4_0</code>, with no key. Ollama and LM Studio work too.</dd>
+          <dt>Regolo.ai, Italy</dt>
+          <dd>Base URL <code>https://api.regolo.ai/v1</code>, model <code>gemma4-31b</code>, with an API key.</dd>
+          <dt>Mistral, France</dt>
+          <dd>Base URL <code>https://api.mistral.ai/v1</code>, model <code>mistral-medium-latest</code>, with an API key.</dd>
+        </dl>
+        <p>Set max context to the model’s real limit: for a local server, the <code>-c</code> it was started with. To keep only the transcript, choose Transcript as the profile.</p>
+        <p class="note note-red">Takku doesn’t check where a provider processes your data: read its terms, and your company’s policy, before using it for real meetings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="updating">
+    <div class="main">
+      <h2 id="updating">Updating</h2>
+      <p>With Homebrew, run <code>brew upgrade <span class="nobr">--cask</span> takku</code>. Otherwise quit Takku, replace it in Applications with the new version and repeat steps 2 and 3 of the install. Your settings, profiles, API keys and models are kept.</p>
+    </div>
+  </section>
+

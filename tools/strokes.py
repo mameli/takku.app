@@ -96,7 +96,8 @@ masks = {
 }
 # Circles around the step numbers, one per step
 for n in range(1, 5):
-    masks[f"circle-{n}"] = svg(56, 56, stroke(loop(28, 28, 22, turn=random.uniform(1.06, 1.14)), 2.3))
+    # Stretched to any box: round on the step numbers, an oval around a word.
+    masks[f"circle-{n}"] = svg(56, 56, stroke(loop(28, 28, 22, turn=random.uniform(1.06, 1.14)), 2.3), " preserveAspectRatio='none'")
 
 colours = {
     "light": {"pencil": "#3f58ae", "red": "#c23b2e", "mark": ("#ffd632", 0.55)},
