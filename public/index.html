@@ -42,12 +42,13 @@
         Takku
         <span class="note note-title">takku &larr; <i>taccuino</i>,<br>Italian for notebook</span>
       </h1>
-      <p class="lead">Records your meetings, transcribes them on your Mac and writes the notes into your Obsidian vault.</p>
-      <p>You choose who writes the summary: a model on your Mac, or a provider you trust. Made for people whose company doesn’t let meeting audio and text leave the EU.</p>
+      <p class="lead">Meeting notes in your Obsidian vault. The audio never leaves your Mac.</p>
+      <p>Takku records both sides of a call, transcribes it on your Mac and writes the summary at the top of your note. An alternative to Granola for people and companies that care where their meeting data goes.</p>
 
-      <div class="install">
-        <code class="command sketch">brew install --cask mameli/takku/takku</code>
-        <p>Or <a href="https://github.com/mameli/takku/releases/latest">download the latest version</a> from GitHub. Free and open source. Needs a Mac with Apple Silicon and macOS 15 or later.</p>
+      <div class="get">
+        <a class="button sketch" href="https://github.com/mameli/takku/releases/latest">Download for Mac</a>
+        <p>Free and open source, for Macs with Apple Silicon and macOS 15 or later.</p>
+        <p>Or with Homebrew: <code>brew install <span class="nobr">--cask</span> mameli/takku/takku</code></p>
       </div>
     </div>
 
@@ -156,19 +157,25 @@
     </figure>
   </header>
 
-  <section class="row" aria-labelledby="what">
+  <section class="row" aria-label="Why Takku">
     <div class="main">
-      <h2 id="what">What it does</h2>
-      <ul class="notes">
-        <li>Records both sides of a call: your microphone and the call’s audio, from Meet, Zoom, Teams or any other app.
-          <span class="note">⌃⌥⌘R starts and stops it from any app</span></li>
-        <li>Transcribes on your Mac with Whisper or Parakeet, in Italian, English and 23 other European languages.</li>
-        <li>Tells the speakers apart by voice, and names them when the call makes it clear, or when you write the names in the note.</li>
-        <li>Writes Markdown into Obsidian: the note opens when the meeting starts, the summary goes on top, the transcript in a file of its own.</li>
-        <li>Marks the moments that matter: press ⌃⌥⌘M and that passage gets a ⭐ in the transcript and priority in the summary.</li>
-        <li>Names the note after the calendar event in progress and lists who was invited, if you allow it.</li>
-        <li>Offers to start when a call app takes the microphone, and to stop when it lets go.</li>
-        <li>Keeps templates and a vocabulary as notes in your vault: write how the summary should look, and the names that speech recognition gets wrong.</li>
+      <ul class="benefits">
+        <li>
+          <h3>The audio stays on your Mac</h3>
+          <p>Whisper or Parakeet transcribe the call right on your Mac. No recording is ever uploaded.</p>
+        </li>
+        <li>
+          <h3>You choose who writes the summary</h3>
+          <p>A model on your Mac, or a provider you trust, for example one in the EU. It reads the transcript, never the audio.</p>
+        </li>
+        <li>
+          <h3>Notes where you already write</h3>
+          <p>The note opens in Obsidian when the call starts. Takku keeps what you write and uses it to shape the summary.</p>
+        </li>
+        <li>
+          <h3>Any call, in your language</h3>
+          <p>Meet, Zoom, Teams or any other app, in Italian, English and 23 more European languages. It tells the speakers apart.</p>
+        </li>
       </ul>
     </div>
   </section>
@@ -177,32 +184,11 @@
     <div class="main">
       <h2 id="meeting">A meeting, from start to stop</h2>
       <ol class="steps">
-        <li>Start from the menu bar, with ⌃⌥⌘R, or from the notification when a call begins.</li>
-        <li>Write your own notes in the meeting note that opens in Obsidian. Takku never changes them, and uses them to steer the summary.</li>
-        <li>Stop. Takku finishes the transcript on your Mac.</li>
-        <li>The summary appears at the top of the note, each point with the time it comes from, followed by a link to the transcript. A notification tells you when it’s ready.</li>
+        <li>Press ⌃⌥⌘R, or start from the notification Takku shows when a call begins.
+          <span class="note note-red">tell the others you’re recording</span></li>
+        <li>Write your own notes in Obsidian while you talk. Press ⌃⌥⌘M to star a moment that matters.</li>
+        <li>Stop. A notification tells you when the summary is ready at the top of the note, each point with the time it was said.</li>
       </ol>
-    </div>
-  </section>
-
-  <section class="row" aria-labelledby="data">
-    <div class="main">
-      <h2 id="data">Where your data is</h2>
-      <div class="boxed sketch">
-        <dl>
-          <dt>Audio</dt>
-          <dd>On your Mac, deleted after 7 days.</dd>
-          <dt>Notes and transcripts</dt>
-          <dd>In your vault, as plain Markdown files.</dd>
-          <dt>Summary</dt>
-          <dd>Written by a model on your Mac (llama.cpp, Ollama, LM Studio) or by the OpenAI-compatible provider you choose, for example one hosted in the EU. It receives the transcript and your notes, <mark>never the audio</mark>.</dd>
-          <dt>API keys</dt>
-          <dd>In the macOS Keychain.</dd>
-          <dt>Nothing else</dt>
-          <dd>The transcription model is downloaded once. A daily update check asks GitHub for the latest version and sends nothing about you or your meetings.</dd>
-        </dl>
-        <p class="note note-boxed">Recording a meeting may need the consent of the others: tell them.</p>
-      </div>
     </div>
   </section>
 
@@ -210,11 +196,9 @@
     <div class="main">
       <h2 id="install">Install</h2>
       <ol class="steps">
-        <li>Run <code>brew install --cask mameli/takku/takku</code>, or <a href="https://github.com/mameli/takku/releases/latest">download the zip</a> and move Takku to Applications.</li>
-        <li>Open Takku. macOS says it can’t verify the app, because Takku is signed but not notarized by Apple: press Done.
-          <span class="note">notarizing needs a paid Apple developer account</span></li>
-        <li>In System Settings, Privacy &amp; Security, press Open Anyway next to Takku and confirm with your password.</li>
-        <li>Choose your vault and a summary provider in Settings. The <a href="https://github.com/mameli/takku#first-setup">first setup guide</a> walks you through it.</li>
+        <li><a href="https://github.com/mameli/takku/releases/latest">Download Takku</a> and move it to Applications, or run <code>brew install <span class="nobr">--cask</span> mameli/takku/takku</code>.</li>
+        <li>The first time, macOS won’t open it: press Done, then Open Anyway in System Settings, Privacy &amp; Security.</li>
+        <li>Choose your vault and a summary model in Settings. The <a href="/setup">setup guide</a> walks you through it.</li>
       </ol>
     </div>
   </section>

@@ -129,7 +129,6 @@ body {
 .hole,
 .sketch::before,
 .sketch::after,
-.notes li::before,
 .steps li::after,
 .title-block th::before,
 .title-block td::before,
@@ -243,20 +242,16 @@ a:focus-visible {
 
 code {
   font: 500 0.9em/1 ui-monospace, "SF Mono", Menlo, monospace;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
-
-mark {
-  color: inherit;
-  margin: 0 -0.15em;
-  padding: 0 0.15em;
-  background: var(--u-mark) center / 100% 100% no-repeat;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+/* The command breaks at its spaces, not after the dashes of an option */
+.nobr {
+  white-space: nowrap;
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--hand);
   font-weight: 700;
   color: var(--ink);
@@ -302,8 +297,9 @@ h2::after {
 
 .lead {
   max-width: 34rem;
-  font-size: 1.375rem;
-  line-height: 36px;
+  text-wrap: balance;
+  font-size: 1.75rem;
+  line-height: 40px;
   color: var(--ink);
 }
 
@@ -332,12 +328,27 @@ h2::after {
   transform: rotate(-4deg);
 }
 
-.install {
-  margin-top: 48px;
+/* The call to action: a yellow button, drawn around twice */
+.get {
+  margin-top: 40px;
 }
-.install p {
-  margin-top: 20px;
+.button.sketch {
+  display: inline-block;
+  padding: 10px 30px 8px;
+  font: 700 1.625rem/1.3 var(--hand);
+  color: #1c2230;
+  background: var(--yellow);
+}
+.button:hover {
+  color: #1c2230;
+  transform: rotate(-1deg);
+}
+.get p {
+  margin: 28px 0 0;
   font-size: 0.9375rem;
+}
+.get p + p {
+  margin-top: 4px;
 }
 
 /* A box drawn twice, as around the formula to remember */
@@ -354,17 +365,6 @@ h2::after {
   transform: rotate(-0.5deg);
   -webkit-mask-position: -131px 1px, -23px calc(100% - 1px), 3px -170px, calc(100% - 3px) -12px;
   mask-position: -131px 1px, -23px calc(100% - 1px), 3px -170px, calc(100% - 3px) -12px;
-}
-
-.command {
-  display: inline-block;
-  max-width: 100%;
-  padding: 14px 20px;
-  font-size: 1.0625rem;
-  line-height: 1.4;
-  color: var(--ink);
-  user-select: all;
-  -webkit-user-select: all;
 }
 
 /* The drawing: pencil outlines, coloured pencil fills */
@@ -485,34 +485,28 @@ h2::after {
 }
 
 /* Lists */
-.notes,
-.steps {
+.steps,
+.benefits {
   margin: 0;
   padding: 0;
   list-style: none;
   max-width: 38rem;
 }
 
-.notes li {
-  position: relative;
-  margin-bottom: 12px;
-  padding-left: 28px;
+/* What Takku is good at: four short notes, two by two */
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--unit) 48px;
+  max-width: 56rem;
 }
-.notes li::before {
-  top: 9px;
-  left: 0;
-  width: 18px;
-  height: 8px;
-  -webkit-mask: var(--dash) center / contain no-repeat;
-  mask: var(--dash) center / contain no-repeat;
+.benefits h3 {
+  margin: 0 0 8px;
+  font-size: 1.375rem;
+  line-height: 1.3;
 }
-.notes .note {
-  position: absolute;
-  top: -2px;
-  right: calc(100% + var(--gutter) + 16px);
-  width: calc(var(--margin) - 28px);
-  text-align: right;
-  transform: rotate(-3deg);
+.benefits p {
+  margin: 0;
 }
 
 .steps {
@@ -558,31 +552,56 @@ h2::after {
   transform-origin: left;
 }
 
-/* Where your data is */
-.boxed {
+.note-red {
+  color: var(--red);
+}
+
+/* Other pages: the way home, the title, boxes of examples */
+.home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 0;
+  font: 700 1.5rem/1 var(--hand);
+  background: none;
+}
+.home img {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-4deg);
+}
+h1.page-title {
+  display: block;
+  font-size: 4.5rem;
+}
+.examples {
   max-width: 42rem;
+  margin-top: 48px;
   padding: 24px 28px 20px;
 }
-.boxed dl {
-  display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 0 20px;
-  margin: 0;
+.examples h3 {
+  margin: 0 0 16px;
+  font-size: 1.375rem;
+  line-height: 1.3;
 }
-.boxed dt {
-  margin-bottom: 16px;
-  font: 700 1.1875rem/var(--unit) var(--hand);
-  color: var(--ink);
-  padding-top: 2px;
-}
-.boxed dd {
+.examples dl {
   margin: 0 0 16px;
 }
-.note-boxed {
-  margin: 8px 0 0;
-  color: var(--red);
+.examples dt {
+  font: 700 1.1875rem/var(--unit) var(--hand);
+  color: var(--ink);
+}
+.examples dd {
+  margin: 4px 0 16px;
+}
+.examples .note {
+  margin: 0;
   transform: rotate(-1deg);
   transform-origin: left;
+}
+.main > ol + p {
+  margin-top: var(--unit);
 }
 
 /* The title block of a technical drawing, aligned with the notes */
@@ -647,7 +666,6 @@ footer .main {
     width: min(100%, 30rem);
     margin: 0 0 56px var(--gutter);
   }
-  .boxed dl { grid-template-columns: 9rem minmax(0, 1fr); }
 
   /* The title block in two columns */
   .title-block-wrap { width: min(100%, 26rem); }
@@ -687,18 +705,12 @@ footer .main {
   h1 { --size: 4.5rem; --gap: 18px; row-gap: 4px; }
   .note-title { flex-basis: 100%; margin-top: 8px; transform: rotate(-2deg); }
   h2 { font-size: 2rem; line-height: 44px; }
-  .lead { font-size: 1.25rem; line-height: 32px; }
-  .command { font-size: 0.875rem; padding: 12px 14px; }
+  .lead { font-size: 1.5rem; line-height: 34px; }
   .schematic { grid-column: 2; width: auto; margin: 0 4px 48px 8px; }
 
-  .notes .note {
-    position: static;
-    display: block;
-    width: auto;
-    margin-top: 2px;
-    text-align: left;
-    transform: rotate(-1deg);
-  }
+  .benefits { grid-template-columns: 1fr; }
+  h1.page-title { font-size: 3rem; }
+  .examples { padding: 20px 18px 16px; }
   .steps li { padding-left: 46px; }
   .steps li::before,
   .steps li::after {
@@ -709,9 +721,5 @@ footer .main {
     height: 40px;
   }
   .steps li::before { font-size: 1.3rem; }
-  .boxed { padding: 20px 18px 16px; }
-  .boxed dl { grid-template-columns: 1fr; }
-  .boxed dt { margin-bottom: 0; }
-  .boxed dd { margin-bottom: 12px; }
 
 }
