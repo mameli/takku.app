@@ -1,6 +1,6 @@
 """Writes the secondary pages (public/<name>.html) from their content in pages/<name>.html,
-with the same head, sheet and title block as the home page, and puts the same title block,
-with the list of sheets, into public/index.html.
+with the same head, sheet and title block as the home page, puts the same title block,
+with the list of sheets, into public/index.html, and lists the sheets in public/sitemap.xml.
 
     python3 tools/pages.py
 
@@ -26,7 +26,11 @@ SHEETS = [
     ("guide", "/guide", "Guide"),
     ("faq", "/faq", "FAQ"),
     ("privacy", "/privacy", "Privacy"),
+    ("granola", "/granola", "Granola"),
 ]
+# Pages that are not sheets: not in the title block, not in the sitemap, not indexed.
+UNLISTED = {"404"}
+SITE = "https://takku.app"
 
 SHEET_DECORATIONS = """  <span class="frame" aria-hidden="true"></span>
   <span class="ruler ruler-top" aria-hidden="true"></span>
@@ -82,6 +86,10 @@ def footer(current):
 def page(name, title, description, body):
     title_attr = html.escape(title, quote=True)
     description_attr = html.escape(description, quote=True)
+    if name in UNLISTED:
+        indexing = '<meta name="robots" content="noindex">'
+    else:
+        indexing = f'<link rel="canonical" href="{SITE}/{name}">'
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -89,6 +97,7 @@ def page(name, title, description, body):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html.escape(title)}</title>
   <meta name="description" content="{description_attr}">
+  {indexing}
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f1f3ee" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1d3f73" media="(prefers-color-scheme: dark)">
@@ -124,7 +133,7 @@ for source in sorted(PAGES.glob("*.html")):
     assert meta, f"{source.name}: the page must start with its title and description"
     fields = dict(line.split(": ", 1) for line in meta.group(1).splitlines())
     name = source.stem
-    assert name in {n for n, _, _ in SHEETS}, f"{name} is not in SHEETS"
+    assert name in {n for n, _, _ in SHEETS} | UNLISTED, f"{name} is not in SHEETS"
     (PUBLIC / f"{name}.html").write_text(page(name, fields["title"], fields["description"], text[meta.end():]))
     print(f"public/{name}.html")
 
@@ -133,3 +142,10 @@ text, count = re.subn(r'  <footer class="row">.*?</footer>\n', lambda _: footer(
 assert count == 1
 index.write_text(text)
 print("public/index.html (title block)")
+
+urls = "".join(f"  <url><loc>{SITE}{path}</loc></url>\n" for _, path, _ in SHEETS)
+(PUBLIC / "sitemap.xml").write_text(
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "</urlset>\n"
+)
+print("public/sitemap.xml")

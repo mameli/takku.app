@@ -3,6 +3,8 @@
   "name": "takku-app",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    // An unknown address gets public/404.html, with status 404.
+    "not_found_handling": "404-page"
   }
 }
