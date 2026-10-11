@@ -221,6 +221,11 @@ p {
   margin: 0 0 var(--unit);
   max-width: 38rem;
 }
+/* No word left alone on the last line */
+p,
+li {
+  text-wrap: pretty;
+}
 
 a {
   color: var(--ink);
@@ -324,6 +329,15 @@ h2::after {
 .hero-text {
   container-type: inline-size;
 }
+/* One sentence per line: a little smaller where the column is narrow, and a sentence
+   that still has to wrap wraps on its own. */
+.hero .lead {
+  font-size: clamp(1.5rem, 100cqi / 18, 1.75rem);
+}
+.hero .lead > span {
+  display: block;
+  text-wrap: balance;
+}
 .hero {
   grid-template-columns: var(--margin) minmax(0, 1fr) minmax(0, clamp(26rem, 34vw, 34rem));
   align-items: start;
@@ -348,9 +362,20 @@ h2::after {
   color: #1c2230;
   background: var(--yellow);
 }
-.button:hover {
+@media (hover: hover) {
+  .button:hover {
+    color: #1c2230;
+    transform: rotate(-1deg);
+  }
+}
+/* Pressed: the paper goes down a little, at once */
+.button:active {
   color: #1c2230;
-  transform: rotate(-1deg);
+  transform: rotate(-1deg) translateY(2px) scale(0.98);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button.sketch { transition: transform 160ms ease-out; }
+  .button.sketch:active { transition-duration: 40ms; }
 }
 .get p {
   margin: 28px 0 0;
@@ -575,10 +600,22 @@ h2::after {
   font: 700 1.5rem/1 var(--hand);
   background: none;
 }
+.home:hover {
+  background: none;
+}
 .home img {
   width: 44px;
   height: 44px;
   transform: rotate(-4deg);
+}
+/* Hovered, the notebook tilts towards you; pressed, it goes down a little */
+@media (hover: hover) {
+  .home:hover img { transform: rotate(-10deg) translateY(-2px); }
+}
+.home:active img { transform: rotate(-10deg) scale(0.94); }
+@media (prefers-reduced-motion: no-preference) {
+  .home img { transition: transform 180ms ease-out; }
+  .home:active img { transition-duration: 40ms; }
 }
 h1.page-title {
   display: block;
