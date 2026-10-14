@@ -13,16 +13,22 @@ description: Run your own script when a meeting is ready, and send it to Notion,
   <section class="row" aria-labelledby="write">
     <div class="main">
       <h2 id="write">Write a hook</h2>
-      <p>Put an executable at <code>~/.takku/hooks/after-processing</code>. When a meeting is ready, and again after every Retry that succeeds, Takku runs it in your vault folder with two arguments: the path of the meeting note and the path of the transcript. The simplest hook commits the vault to git:</p>
+      <p>A hook is one file: <code>~/.takku/hooks/after-processing</code>. A file, not a folder, and with no extension: Takku looks for exactly that name, in the <code>hooks</code> folder.</p>
+      <p>It can be written in any language. Its first line starts with <code>#!</code> and says which program runs it: <code>#!/bin/sh</code> for a shell script, <code>#!/usr/bin/env python3</code> for Python, <code>#!/usr/bin/env node</code> for JavaScript. Takku runs the file itself, as if you typed its path in the Terminal, and macOS reads that line to start the right program. Without it, the run fails with “Exec format error”.</p>
+      <p>When a meeting is ready, and again after every Retry that succeeds, Takku runs it in your vault folder with two arguments: the path of the meeting note and the path of the transcript. The simplest hook commits the vault to git:</p>
       <pre class="sketch"><code>#!/bin/sh
 # $1: the meeting note, $2: the transcript
 git add -A &amp;&amp; git commit -qm "Meeting: $(basename "$1" .md)"</code></pre>
+      <p>To create it, make the file, make it executable, and open it in your text editor:</p>
+      <pre class="sketch"><code>mkdir -p ~/.takku/hooks
+touch ~/.takku/hooks/after-processing
+chmod +x ~/.takku/hooks/after-processing
+open -t ~/.takku/hooks/after-processing</code></pre>
       <ul>
-        <li>Make it executable with <code>chmod +x ~/.takku/hooks/after-processing</code>. Without the file nothing happens: there is no setting to turn on.</li>
+        <li>Without the file nothing happens: there is no setting to turn on. Without <code>chmod +x</code>, Takku tells you it can’t run it.</li>
         <li>A Retry runs it again, so update what the first run created rather than creating it twice. The note’s <code>takku_id</code> never changes: use it for that.</li>
         <li>Every run is written to <code>~/.takku/hooks/after-processing.log</code>, with the command to run it again by hand. If the script fails, a notification says so, and the meeting is not touched.</li>
         <li>To run it by hand on any meeting, call it with the note’s path: it is just a script.</li>
-        <li>One hook can do several things: make <code>after-processing</code> call your other scripts, and decide in it which meetings go where, for example only the notes you tagged <code>notion</code>.</li>
         <li>Homebrew’s tools are found, and a script still running after 5 minutes is stopped.</li>
         <li>The script runs with Takku’s permissions, microphone included, and sends your meetings wherever you tell it to. Put there only code you trust.</li>
       </ul>
@@ -39,7 +45,8 @@ git add -A &amp;&amp; git commit -qm "Meeting: $(basename "$1" .md)"</code></pre
         <li>Save the token in the Keychain, pasting it when asked:
           <pre class="sketch"><code>security add-generic-password -a "$USER" -s takku-notion -w</code></pre></li>
         <li>Open the page the meetings will go under. In its ••• menu, choose Connections, Add connection, and pick yours. Copy the page’s link: its ID is the 32 characters at the end.</li>
-        <li>Install the script, then write the page ID in <code>PARENT_PAGE_ID</code> at its top:
+        <li>Install the script as your hook, then write the page ID in <code>PARENT_PAGE_ID</code> at its top:
+          <span class="note">for more than one hook, save it as notion.py instead: see below</span>
           <pre class="sketch"><code>mkdir -p ~/.takku/hooks
 curl -fsSL https://raw.githubusercontent.com/mameli/Takku/main/examples/hooks/notion.py \
   -o ~/.takku/hooks/after-processing
@@ -49,5 +56,31 @@ open -t ~/.takku/hooks/after-processing</code></pre></li>
           <pre class="sketch"><code>~/.takku/hooks/after-processing "/path/to/vault/Meetings/a meeting.md"</code></pre></li>
       </ol>
       <p>From then on every meeting goes to Notion as soon as it is ready.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="several">
+    <div class="main">
+      <h2 id="several">More than one hook</h2>
+      <p>Takku runs only <code>after-processing</code>. To do more than one thing, keep each hook in its own file in the same folder, and make <code>after-processing</code> run them in turn. For example, Notion for every meeting, git for every meeting, and Confluence only for the notes you tagged <code>confluence</code>:</p>
+      <pre class="sketch"><code>#!/bin/sh
+# ~/.takku/hooks/after-processing: runs the other hooks in turn
+hooks="$HOME/.takku/hooks"
+failed=0
+
+"$hooks/notion.py" "$1" "$2" || failed=1
+"$hooks/git-commit" "$1" "$2" || failed=1
+
+# Only the notes tagged confluence
+if grep -q '^tags:.*confluence' "$1"; then
+  "$hooks/confluence" "$1" "$2" || failed=1
+fi
+
+exit $failed</code></pre>
+      <ul>
+        <li>Each hook runs even if the one before failed, and the notification still tells you something went wrong.</li>
+        <li>Every file it calls needs its own <code>#!</code> line and <code>chmod +x</code>, like <code>after-processing</code>. Their names are up to you: Takku never runs them by itself.</li>
+        <li>The 5 minutes count for <code>after-processing</code> as a whole, the hooks it calls included.</li>
+      </ul>
     </div>
   </section>
