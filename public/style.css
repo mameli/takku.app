@@ -674,6 +674,10 @@ pre.sketch {
 pre code {
   line-height: 1.6;
 }
+/* Code inside a step: room for the drawn box below the step's text */
+.steps pre.sketch {
+  margin: 14px 0 6px;
+}
 
 .main > ol + p {
   margin-top: var(--unit);

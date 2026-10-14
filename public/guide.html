@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Using Takku: templates, vocabulary and speaker names</title>
-  <meta name="description" content="Record a meeting, mark the moments that matter, and teach Takku your templates, your words and the names of the people you meet.">
+  <title>Using Takku: templates, vocabulary, speaker names and hooks</title>
+  <meta name="description" content="Record a meeting, mark the moments that matter, teach Takku your templates, your words and the names of the people you meet, and send each meeting to Notion or anywhere else.">
   <link rel="canonical" href="https://takku.app/guide">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f1f3ee" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1d3f73" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Takku">
-  <meta property="og:title" content="Using Takku: templates, vocabulary and speaker names">
-  <meta property="og:description" content="Record a meeting, mark the moments that matter, and teach Takku your templates, your words and the names of the people you meet.">
+  <meta property="og:title" content="Using Takku: templates, vocabulary, speaker names and hooks">
+  <meta property="og:description" content="Record a meeting, mark the moments that matter, teach Takku your templates, your words and the names of the people you meet, and send each meeting to Notion or anywhere else.">
   <meta property="og:url" content="https://takku.app/guide">
   <meta property="og:image" content="https://takku.app/og.png">
   <meta property="og:image:width" content="1200">
@@ -68,7 +68,7 @@
   <section class="row" aria-labelledby="templates">
     <div class="main">
       <h2 id="templates">Templates</h2>
-      <p>A template is a note in <code>Meetings/_Templates/</code>: its text tells the model what to write and how, in your own words. Create one from Settings, Templates, then edit it in Obsidian like any other note.</p>
+      <p>A template is a Markdown file in <code>~/.takku/templates/</code>: its text tells the model what to write and how, in your own words. Create one from Settings, Templates, then open it with Edit With, in any text editor.</p>
       <p>The summary is written in the language of the meeting. To always get it in one language, add <code>summary_language: en</code> (or <code>it</code>, <code>fr</code>…) to the template’s frontmatter.</p>
     </div>
   </section>
@@ -76,7 +76,7 @@
   <section class="row" aria-labelledby="vocabulary">
     <div class="main">
       <h2 id="vocabulary">Vocabulary</h2>
-      <p>Names, acronyms and technical words that speech recognition gets wrong go in <code>Meetings/_Vocabulary.md</code>, which you open from Settings, Vocabulary. One term per line: the right spelling, then after <code>=</code> what is heard instead, then after <code>|</code> a short description. The last two are optional.</p>
+      <p>Names, acronyms and technical words that speech recognition gets wrong go in <code>~/.takku/vocabulary.md</code>, which you open from Settings, Vocabulary, Edit Vocabulary With. One term per line: the right spelling, then after <code>=</code> what is heard instead, then after <code>|</code> a short description. The last two are optional.</p>
       <pre class="sketch"><code>- Kubernetes = cubernetes, kubernetis
 - dbt = di bi ti | data transformation tool
 - Holacracy</code></pre>
@@ -98,6 +98,42 @@
     <div class="main">
       <h2 id="calendar">Calendar</h2>
       <p>Turn on Use the calendar in Settings, General, and allow access. When a meeting starts during an event, the note takes the event’s name and lists who was invited, which helps the summary name the speakers. If the list is wrong, correct it in the note: it counts on the next Retry.</p>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="hook">
+    <div class="main">
+      <h2 id="hook">Hook</h2>
+      <p>A hook takes each meeting somewhere else once Takku is done with it: Notion, Confluence, a git commit of your vault, anything a script can do. Takku has no integrations of its own. It runs your script and hands it the files.</p>
+      <p>Put an executable at <code>~/.takku/hooks/after-processing</code>. When a meeting is ready, and again after every Retry that succeeds, Takku runs it in your vault folder with two arguments: the path of the meeting note and the path of the transcript. The simplest hook commits the vault to git:</p>
+      <pre class="sketch"><code>#!/bin/sh
+# $1: the meeting note, $2: the transcript
+git add -A &amp;&amp; git commit -qm "Meeting: $(basename "$1" .md)"</code></pre>
+      <ul>
+        <li>Make it executable with <code>chmod +x ~/.takku/hooks/after-processing</code>. Without the file nothing happens: there is no setting to turn on.</li>
+        <li>A Retry runs it again, so update what the first run created rather than creating it twice. The note’s <code>takku_id</code> never changes: use it for that.</li>
+        <li>Every run is written to <code>~/.takku/hooks/after-processing.log</code>, with the command to run it again by hand. If the script fails, a notification says so, and the meeting is not touched.</li>
+        <li>Homebrew’s tools are found, and a script still running after 5 minutes is stopped.</li>
+        <li>The script runs with Takku’s permissions, microphone included, and sends your meetings wherever you tell it to. Put there only code you trust.</li>
+      </ul>
+      <h3 id="notion">Every meeting in Notion</h3>
+      <p>A ready-made hook, <a href="https://github.com/mameli/Takku/blob/main/examples/hooks/notion.py">notion.py</a>, copies each meeting note (the summary and your notes) to a Notion page under a page you choose, and updates the same page after a Retry. It needs Python 3, from Homebrew or the Xcode Command Line Tools.</p>
+      <ol class="steps">
+        <li>In Notion’s <a href="https://app.notion.com/developers/connections">developer portal</a>, open Internal connections and create a new connection for your workspace, with read, update and insert content turned on. Copy its API token.
+          <span class="note">a connection sees only the pages you share with it</span></li>
+        <li>Save the token in the Keychain, pasting it when asked:
+          <pre class="sketch"><code>security add-generic-password -a "$USER" -s takku-notion -w</code></pre></li>
+        <li>Open the page the meetings will go under. In its ••• menu, choose Connections, Add connection, and pick yours. Copy the page’s link: its ID is the 32 characters at the end.</li>
+        <li>Install the script, then write the page ID in <code>PARENT_PAGE_ID</code> at its top:
+          <pre class="sketch"><code>mkdir -p ~/.takku/hooks
+curl -fsSL https://raw.githubusercontent.com/mameli/Takku/main/examples/hooks/notion.py \
+  -o ~/.takku/hooks/after-processing
+chmod +x ~/.takku/hooks/after-processing
+open -t ~/.takku/hooks/after-processing</code></pre></li>
+        <li>Try it on a meeting you already have, then look for the page in Notion:
+          <pre class="sketch"><code>~/.takku/hooks/after-processing "/path/to/vault/Meetings/a meeting.md"</code></pre></li>
+      </ol>
+      <p>From then on every meeting goes to Notion as soon as it is ready.</p>
     </div>
   </section>
 
