@@ -24,6 +24,7 @@ SHEETS = [
     ("index", "/", "Takku"),
     ("setup", "/setup", "Setup"),
     ("guide", "/guide", "Guide"),
+    ("hooks", "/hooks", "Hooks"),
     ("faq", "/faq", "FAQ"),
     ("privacy", "/privacy", "Privacy"),
     ("granola", "/granola", "Granola"),

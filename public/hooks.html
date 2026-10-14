@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Takku hooks: send every meeting to Notion, Confluence or git</title>
+  <meta name="description" content="Run your own script when a meeting is ready, and send it to Notion, Confluence, git or anywhere else. With a ready-made hook for Notion.">
+  <link rel="canonical" href="https://takku.app/hooks">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f1f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1d3f73" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Takku">
+  <meta property="og:title" content="Takku hooks: send every meeting to Notion, Confluence or git">
+  <meta property="og:description" content="Run your own script when a meeting is ready, and send it to Notion, Confluence, git or anywhere else. With a ready-made hook for Notion.">
+  <meta property="og:url" content="https://takku.app/hooks">
+  <meta property="og:image" content="https://takku.app/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/kalam-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/literata.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="sheet">
+  <span class="frame" aria-hidden="true"></span>
+  <span class="ruler ruler-top" aria-hidden="true"></span>
+  <span class="ruler ruler-left" aria-hidden="true"></span>
+  <span class="margin-rule" aria-hidden="true"></span>
+  <span class="hole hole-tl" aria-hidden="true"></span>
+  <span class="hole hole-tr" aria-hidden="true"></span>
+  <span class="hole hole-bl" aria-hidden="true"></span>
+  <span class="hole hole-br" aria-hidden="true"></span>
+
+  <header class="row">
+    <div class="main">
+      <a class="home" href="/"><img src="/icon.png" alt="" width="44" height="44">Takku</a>
+      <h1 class="page-title">Hooks</h1>
+      <p class="lead">Takku has no integrations of its own. When a meeting is ready, it runs your script and hands it the files: the script sends them wherever you want.</p>
+    </div>
+  </header>
+
+  <section class="row" aria-labelledby="write">
+    <div class="main">
+      <h2 id="write">Write a hook</h2>
+      <p>Put an executable at <code>~/.takku/hooks/after-processing</code>. When a meeting is ready, and again after every Retry that succeeds, Takku runs it in your vault folder with two arguments: the path of the meeting note and the path of the transcript. The simplest hook commits the vault to git:</p>
+      <pre class="sketch"><code>#!/bin/sh
+# $1: the meeting note, $2: the transcript
+git add -A &amp;&amp; git commit -qm "Meeting: $(basename "$1" .md)"</code></pre>
+      <ul>
+        <li>Make it executable with <code>chmod +x ~/.takku/hooks/after-processing</code>. Without the file nothing happens: there is no setting to turn on.</li>
+        <li>A Retry runs it again, so update what the first run created rather than creating it twice. The note’s <code>takku_id</code> never changes: use it for that.</li>
+        <li>Every run is written to <code>~/.takku/hooks/after-processing.log</code>, with the command to run it again by hand. If the script fails, a notification says so, and the meeting is not touched.</li>
+        <li>To run it by hand on any meeting, call it with the note’s path: it is just a script.</li>
+        <li>One hook can do several things: make <code>after-processing</code> call your other scripts, and decide in it which meetings go where, for example only the notes you tagged <code>notion</code>.</li>
+        <li>Homebrew’s tools are found, and a script still running after 5 minutes is stopped.</li>
+        <li>The script runs with Takku’s permissions, microphone included, and sends your meetings wherever you tell it to. Put there only code you trust.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="notion">
+    <div class="main">
+      <h2 id="notion">Every meeting in Notion</h2>
+      <p>A ready-made hook, <a href="https://github.com/mameli/Takku/blob/main/examples/hooks/notion.py">notion.py</a>, copies each meeting note (the summary and your notes) to a Notion page under a page you choose, and updates the same page after a Retry. It needs Python 3, from Homebrew or the Xcode Command Line Tools.</p>
+      <ol class="steps">
+        <li>In Notion’s <a href="https://app.notion.com/developers/connections">developer portal</a>, open Internal connections and create a new connection for your workspace, with read, update and insert content turned on. Copy its API token.
+          <span class="note">a connection sees only the pages you share with it</span></li>
+        <li>Save the token in the Keychain, pasting it when asked:
+          <pre class="sketch"><code>security add-generic-password -a "$USER" -s takku-notion -w</code></pre></li>
+        <li>Open the page the meetings will go under. In its ••• menu, choose Connections, Add connection, and pick yours. Copy the page’s link: its ID is the 32 characters at the end.</li>
+        <li>Install the script, then write the page ID in <code>PARENT_PAGE_ID</code> at its top:
+          <pre class="sketch"><code>mkdir -p ~/.takku/hooks
+curl -fsSL https://raw.githubusercontent.com/mameli/Takku/main/examples/hooks/notion.py \
+  -o ~/.takku/hooks/after-processing
+chmod +x ~/.takku/hooks/after-processing
+open -t ~/.takku/hooks/after-processing</code></pre></li>
+        <li>Try it on a meeting you already have, then look for the page in Notion:
+          <pre class="sketch"><code>~/.takku/hooks/after-processing "/path/to/vault/Meetings/a meeting.md"</code></pre></li>
+      </ol>
+      <p>From then on every meeting goes to Notion as soon as it is ready.</p>
+    </div>
+  </section>
+
+  <footer class="row">
+    <div class="main">
+      <div class="title-block-wrap sketch">
+      <table class="title-block">
+        <tr>
+          <th scope="row">Sheets</th>
+          <td colspan="3"><nav aria-label="Pages" class="sheets"><a class="sheet-link" href="/">1 Takku</a> <a class="sheet-link" href="/setup">2 Setup</a> <a class="sheet-link" href="/guide">3 Guide</a> <span class="sheet-link" aria-current="page">4 Hooks</span> <a class="sheet-link" href="/faq">5 FAQ</a> <a class="sheet-link" href="/privacy">6 Privacy</a> <a class="sheet-link" href="/granola">7 Granola</a></nav></td>
+        </tr>
+        <tr>
+          <th scope="row">Project</th>
+          <td>Takku, a menu bar app for macOS</td>
+          <th scope="row">Drawn by</th>
+          <td><a href="https://github.com/mameli">mameli</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Source</th>
+          <td><a href="https://github.com/mameli/Takku">mameli/Takku</a></td>
+          <th scope="row">License</th>
+          <td>MIT</td>
+        </tr>
+        <tr>
+          <th scope="row">Requires</th>
+          <td>Apple Silicon, macOS 15 or later</td>
+          <th scope="row">Releases</th>
+          <td><a href="https://github.com/mameli/Takku/releases">all versions</a></td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
