@@ -59,6 +59,15 @@ open -t ~/.takku/hooks/after-processing</code></pre></li>
     </div>
   </section>
 
+  <section class="row" aria-labelledby="agent">
+    <div class="main">
+      <h2 id="agent">Let your agent write it</h2>
+      <p>If you use a coding agent (Claude Code, Codex, Copilot CLI, Cursor…), it can set up the hook for you: <a href="/hooks.md">hooks.md</a> is this page written for agents, with what Takku passes to the hook, the format of the files and the rules to follow. Paste this to your agent, and say what you want the hook to do:</p>
+      <pre class="sketch"><code>Read https://takku.app/hooks.md and set up a Takku hook that …</code></pre>
+      <p>For example, a summary of every meeting from a subscription you already have, such as Copilot, Claude or Codex: record with <em>Transcript</em> only and let the hook ask your assistant. You lose what Takku does around its own summary: the template, the vocabulary, the speaker names and the title of the note. The agent asks you which meetings it may send; a meeting with a customer is the customer’s data.</p>
+    </div>
+  </section>
+
   <section class="row" aria-labelledby="several">
     <div class="main">
       <h2 id="several">More than one hook</h2>
