@@ -63,7 +63,7 @@
         <li>Choose your Obsidian vault. Takku writes each meeting in its Meetings folder.</li>
         <li>Allow the microphone and System Audio Recording Only when macOS asks.</li>
         <li>Download the transcription model, about 650 MB. It’s prepared for your Mac once, which takes a few minutes. If you skip it, it happens during your first meeting.</li>
-        <li>For summaries, open Settings from the Takku menu and, in Summary Profiles, add a profile: name, base URL, model, max context and, if the provider needs one, an API key, which is kept in the macOS Keychain. Press Test connection.</li>
+        <li>For summaries, open Settings from the Takku menu and, in Summary Profiles, add a profile: name, base URL, model, max context and, if the provider needs one, an API key, which is kept in the macOS Keychain. Reasoning and extra parameters are optional: see <a href="#reasoning">below</a>. Press Test connection.</li>
         <li>If you want Takku to start with your Mac, turn on Open at login in Settings, General.</li>
       </ol>
 
@@ -81,6 +81,19 @@
         </dl>
         <p>Set max context to the model’s real limit: for a local server, the <code>-c</code> it was started with. To keep only the transcript, choose Transcript as the profile.</p>
         <p class="note note-red">Takku doesn’t check where a provider processes your data: read its terms, and your company’s policy, before using it for real meetings.</p>
+      </div>
+
+      <div class="examples sketch">
+        <h3 id="reasoning">Reasoning and extra parameters</h3>
+        <p>Reasoning sets how much the model thinks before it answers. Model default sends nothing and is the safe choice. With OpenRouter every level works on every model that reasons, because OpenRouter adapts it. Other providers get the same setting as OpenAI’s <code>reasoning_effort</code>, which not every model accepts. More reasoning also means a slower summary.</p>
+        <p>Extra parameters are for what a model needs beyond that: a JSON object, added to every request as you write it, in place of what Takku would send for the same key. The provider’s documentation says what to write. Two examples on <a href="https://docs.tensorx.ai/api-reference/reasoning">TensorX</a>:</p>
+        <dl>
+          <dt>DeepSeek V4</dt>
+          <dd><code>{"chat_template_kwargs": {"thinking": true}}</code> makes it reason, which it doesn’t do by default.</dd>
+          <dt>Qwen 3.8</dt>
+          <dd><code>{"reasoning_effort": "xhigh"}</code> gives it the most reasoning. It refuses Off and High from the menu.</dd>
+        </dl>
+        <p>If the provider refuses a value, the error says what the profile sets. Press Test connection after changing either one: it sends the same reasoning and extra parameters as a summary.</p>
       </div>
     </div>
   </section>
