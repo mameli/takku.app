@@ -22,6 +22,8 @@ description: What Takku keeps on your Mac, what it sends and to whom: the audio 
           <dd>Whisper or Parakeet turn speech into text on your Mac, and the voices are told apart on your Mac too.</dd>
           <dt>Notes and transcripts</dt>
           <dd>In your vault, as plain Markdown files. Your templates and vocabulary are Markdown files too, in <code>~/.takku</code>.</dd>
+          <dt>Screenshots</dt>
+          <dd>Only the ones you take with ⌃⌥⌘S, in your vault, in <code>Meetings/Screenshots</code>. Takku never deletes them and never sends them anywhere.</dd>
           <dt>The summary log</dt>
           <dd>A copy of every request sent to the summary provider and of every reply, in <code>~/.takku/summary-log</code>, to help you improve your templates. Takku never reads it or sends it anywhere, not even in a problem report. It keeps up to 5 MB, oldest first out; turn it off or delete it in Settings, Recordings.</dd>
           <dt>API keys</dt>
@@ -39,7 +41,7 @@ description: What Takku keeps on your Mac, what it sends and to whom: the audio 
       <div class="examples sketch">
         <dl>
           <dt>To the summary provider</dt>
-          <dd>The transcript, your notes, the template, the terms of your vocabulary and, with the calendar on, the names of who was invited. <mark>Never the audio.</mark> With a model on your Mac, such as llama.cpp, Ollama or LM Studio, nothing leaves at all.</dd>
+          <dd>The transcript, your notes, the template, the terms of your vocabulary and, with the calendar on, the names of who was invited. <mark>Never the audio, nor your screenshots.</mark> With a model on your Mac, such as llama.cpp, Ollama or LM Studio, nothing leaves at all.</dd>
           <dt>From Hugging Face</dt>
           <dd>The transcription model and a small model that tells voices apart, downloaded once. Nothing about you or your meetings is sent.</dd>
           <dt>To your hook</dt>
