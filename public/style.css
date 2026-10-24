@@ -377,6 +377,75 @@ h2::after {
   .button.sketch { transition: transform 160ms ease-out; }
   .button.sketch:active { transition-duration: 40ms; }
 }
+/* Takku Credit's packs: three drawn boxes, the recommended one yellow like the download button */
+.packs {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  max-width: 38rem;
+  margin: 40px 0 calc(var(--unit) * 3);
+}
+.pack {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 12px 8px 10px;
+  text-align: center;
+  font: 700 1.625rem/1.2 var(--hand);
+  color: var(--ink);
+  background: var(--paper);
+}
+.pack > span:not(.note) {
+  margin-top: 2px;
+  font: 400 0.8125rem/1.3 var(--serif);
+}
+.pack.pack-recommended {
+  padding: 18px 8px 14px;
+  font-size: 2rem;
+  color: #1c2230;
+  background: var(--yellow);
+}
+.pack-recommended > span:not(.note) {
+  color: #1c2230;
+}
+.pack .note {
+  position: absolute;
+  top: -1.6rem;
+  left: 0;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  white-space: nowrap;
+  transform: rotate(-3deg);
+}
+/* A remark right under its box, as wide as the box: it wraps rather than run under the next one */
+.pack .note-below {
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  white-space: normal;
+  text-align: center;
+  transform: rotate(1.5deg);
+}
+@media (hover: hover) {
+  .pack:hover {
+    color: var(--ink);
+    transform: rotate(-1deg);
+  }
+  .pack-recommended:hover {
+    color: #1c2230;
+  }
+}
+.pack:active {
+  transform: rotate(-1deg) translateY(2px) scale(0.98);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pack { transition: transform 160ms ease-out; }
+  .pack:active { transition-duration: 40ms; }
+}
+
 .get p {
   margin: 28px 0 0;
   font-size: 0.9375rem;
