@@ -430,8 +430,10 @@ h2::after {
   transform: rotate(1.5deg);
 }
 @media (hover: hover) {
+  /* Not the link underline of a:hover, which would tile over the whole box */
   .pack:hover {
     color: var(--ink);
+    background-image: none;
     transform: rotate(-1deg);
   }
   .pack-recommended:hover {
