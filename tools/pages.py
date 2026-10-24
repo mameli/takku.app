@@ -23,6 +23,7 @@ PAGES = ROOT / "pages"
 SHEETS = [
     ("index", "/", "Takku"),
     ("setup", "/setup", "Setup"),
+    ("credit", "/credit", "Credit"),
     ("guide", "/guide", "Guide"),
     ("hooks", "/hooks", "Hooks"),
     ("faq", "/faq", "FAQ"),

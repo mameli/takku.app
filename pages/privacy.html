@@ -7,7 +7,7 @@ description: What Takku keeps on your Mac, what it sends and to whom: the audio 
       <a class="home" href="/"><img src="/icon.png" alt="" width="44" height="44">Takku</a>
       <h1 class="page-title">Where your data goes</h1>
       <p class="lead">Takku runs on your Mac. This page lists everything it keeps, everything it sends, and to whom.</p>
-      <p>Takku has no account, no analytics and no server of its own. It’s open source, so all of this can be <a href="https://github.com/mameli/Takku">checked in the code</a>.</p>
+      <p>Takku has no account, no analytics and no server of its own, except <a href="#credit">Takku Credit</a> if you choose it. It’s open source, so all of this can be <a href="https://github.com/mameli/Takku">checked in the code</a>.</p>
     </div>
   </header>
 
@@ -41,7 +41,7 @@ description: What Takku keeps on your Mac, what it sends and to whom: the audio 
       <div class="examples sketch">
         <dl>
           <dt>To the summary provider</dt>
-          <dd>The transcript, your notes, the template, the terms of your vocabulary and, with the calendar on, the names of who was invited. <mark>Never the audio, nor your screenshots.</mark> With a model on your Mac, such as llama.cpp, Ollama or LM Studio, nothing leaves at all.</dd>
+          <dd>The transcript, your notes, the template, the terms of your vocabulary and, with the calendar on, the names of who was invited. <mark>Never the audio, nor your screenshots.</mark> With a model on your Mac, such as llama.cpp, Ollama or LM Studio, nothing leaves at all. With Takku Credit, see <a href="#credit">below</a>.</dd>
           <dt>From Hugging Face</dt>
           <dd>The transcription model and a small model that tells voices apart, downloaded once. Nothing about you or your meetings is sent.</dd>
           <dt>To your hook</dt>
@@ -53,11 +53,28 @@ description: What Takku keeps on your Mac, what it sends and to whom: the audio 
     </div>
   </section>
 
+  <section class="row" aria-labelledby="credit">
+    <div class="main">
+      <h2 id="credit">With Takku Credit</h2>
+      <p><a href="/credit">Takku Credit</a> is optional: only if you use it.</p>
+      <div class="examples sketch">
+        <dl>
+          <dt>Your meetings</dt>
+          <dd>The transcript and your notes go to <code>api.takku.app</code>, which passes them to TensorX and the summary back to you. Neither keeps them: TensorX processes them in memory on servers in the EU, with AWS in Ireland and Scaleway in France.</dd>
+          <dt>What Takku Credit keeps</dt>
+          <dd>Your email address, the balance, and for each summary how many tokens it used and what it cost. Not the key itself, only a fingerprint of it, and never the text of a meeting.</dd>
+          <dt>Who else is involved</dt>
+          <dd>Cloudflare runs <code>api.takku.app</code>. Stripe takes the payment and sends the receipt. Resend sends the email with your key.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <section class="row" aria-labelledby="provider">
     <div class="main">
       <h2 id="provider">Choosing a provider</h2>
       <p>Takku doesn’t check where a provider processes your data. If you or your company have rules, use a model on your Mac, or a provider whose terms fit them, for example Regolo.ai in Italy or Mistral in France. Read the terms before using it for real meetings.</p>
-      <p>The <a href="/setup#first-setup">setup</a> has profiles to start from.</p>
+      <p>The <a href="/setup#first-setup">setup</a> has profiles to start from. <a href="/credit">Takku Credit</a> uses a model hosted in the EU and keeps nothing of your meetings.</p>
     </div>
   </section>
 
